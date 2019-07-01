@@ -9,6 +9,7 @@ const createApi = () => {
   //============
   // Movies
   const getMovies = () => api.get("/movies");
+  const getSeasons = () => api.get("/seasons");
 
   const addMovie = movie => api.post(`/movies/add`, { ...movie });
 
@@ -18,6 +19,21 @@ const createApi = () => {
   //============
   // users
   const loginUser = access_token => api.post("/users/login", { access_token });
+
+  const getUser = userId => api.get(`/users/${userId}`);
+
+  const getUserOverall = userId => api.get(`/users/${userId}/overall`);
+
+  const predictMovie = (movieId, userId, prediction) =>
+    api.post(`/users/predict/${movieId}`, { userId, prediction });
+
+  const getSeasonRankings = (groupId, seasonId) =>
+    api.get(`/groups/${groupId}/rankings/${seasonId}`);
+
+  const getOverallRankings = groupId => api.get(`/groups/${groupId}/rankings`);
+
+  const createGroup = (accessToken, user) =>
+    api.post("/groups/create", { accessToken, user });
 
   //============
   // admin
@@ -37,9 +53,16 @@ const createApi = () => {
 
   return {
     getMovies,
+    getSeasons,
     addMovie,
     editMovie,
     loginUser,
+    getUser,
+    getUserOverall,
+    createGroup,
+    predictMovie,
+    getSeasonRankings,
+    getOverallRankings,
     getAllFeedback,
     respondToFeedback,
     messageAll,

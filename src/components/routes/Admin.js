@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Actions } from "../../redux";
+import { Redirect } from "react-router-dom";
 import moment from "moment";
 import DateTime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
@@ -19,6 +20,7 @@ import {
 } from "@material-ui/core";
 
 import { defaultFilterMethod, generateReleaseText } from "../../util";
+import Loader from "../misc/Loader";
 
 class Admin extends Component {
   constructor(props) {
@@ -38,11 +40,11 @@ class Admin extends Component {
       add_summary: "",
       add_trailer: "",
       add_rtLink: "",
+      add_poster: "",
       add_releaseDate: moment.utc().startOf("day"),
 
       isEdit: false,
       beingEdited: {},
-      currentServerTime: null,
 
       messageToAll: "",
 
@@ -76,6 +78,7 @@ class Admin extends Component {
       summary: this.state.add_summary,
       trailer: this.state.add_trailer,
       rtLink: this.state.add_rtLink,
+      poster: this.state.add_poster,
       releaseDate: this.state.add_releaseDate.unix(),
       isClosed: 0,
       rtScore: -1,
@@ -104,6 +107,14 @@ class Admin extends Component {
 
   render() {
     const { tab } = this.state;
+    console.log(this.props.user);
+
+    if (!this.props.user) {
+      return <Loader />;
+    }
+    if (!this.props.user.isAdmin) {
+      return <Redirect to={"/"} />;
+    }
 
     const renderEnv = () => {
       if (
@@ -156,6 +167,7 @@ class Admin extends Component {
           </div>
           {renderInput("add_trailer")}
           {renderInput("add_rtLink")}
+          {renderInput("add_poster")}
           <div style={{ width: "100%", marginBottom: 20 }}>
             <span>Release Date (UTC)</span>
             <DateTime
@@ -700,6 +712,8 @@ class Admin extends Component {
         </div>
         <AppBar position="static">
           <Tabs
+            variant="scrollable"
+            scrollButtons="on"
             value={tab}
             onChange={(e, newTab) => {
               if (newTab > 3 && !this.props.otherLogs.length) {
@@ -726,6 +740,7 @@ class Admin extends Component {
 const mapStateToProps = state => {
   const { feedback, otherLogs, httpLogs } = state.admin;
   return {
+    user: state.user.user,
     styles: state.styles,
     feedback,
     otherLogs,

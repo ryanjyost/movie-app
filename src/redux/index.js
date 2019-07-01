@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { persist } from "./persist";
 
 // reducers
 import styles from "./styles";
@@ -20,6 +23,12 @@ export const Actions = {
   movies: MovieActions
 };
 
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: [] // only navigation will be persisted
+};
+
 const createRootReducer = history =>
   combineReducers({
     styles,
@@ -28,11 +37,15 @@ const createRootReducer = history =>
     movies
   });
 
+const persistedReducer = persist("root", [], createRootReducer());
+
 export default function configureStore(sagaMiddleware) {
   const store = createStore(
-    createRootReducer(),
+    persistedReducer,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   );
 
-  return store;
+  let persistor = persistStore(store);
+
+  return { store, persistor };
 }

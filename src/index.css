@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: 'Roboto', sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -10,4 +11,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#addToHomeScreen{
+  display:none;
+}
+
+.marvel-device.iphone8{
+  margin-top: 50px;
+  width: calc(100vw - 80px);
+  max-width:375px;
+  height: calc((100vw - 80px) * (667/375) - 2px);
+  max-height: calc(667/375 * 375px);
 }

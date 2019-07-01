@@ -1,59 +1,160 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Actions } from "../../redux/index";
+import { Actions } from "../../redux";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/styles";
-import Storage from "store";
+import { makeStyles } from "@material-ui/styles";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Container,
+  Tab,
+  Tabs,
+  Paper
+} from "@material-ui/core";
+import PeopleIcon from "@material-ui/icons/People";
+import MovieIcon from "@material-ui/icons/MovieOutlined";
+import HomeIcon from "@material-ui/icons/HomeOutlined";
+import { NavLink, withRouter } from "react-router-dom";
+import AppHeader from "../nav/AppHeader";
+import Loader from "../misc/Loader";
 
-// PAGES
-import AuthRedirect from "./AuthRedirect";
-
-class App extends React.Component {
-  state = {};
-
-  componentDidMount() {
-    this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions.bind(this));
-    this.handleUserOnMount();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
-  }
-
-  handleUserOnMount() {
-    if (Storage.get("userId")) {
-      // get prev auth user
-      let userId = Storage.get("userId");
-      // this.props.userLogin(userId);
+const useStyles = makeStyles(theme => {
+  console.log("THEME", theme);
+  return {
+    bottomNav: {
+      position: "fixed",
+      bottom: 0,
+      width: "100%"
     }
+  };
+});
+
+const AdapterLink = React.forwardRef((props, ref) => (
+  <NavLink innerRef={ref} {...props} />
+));
+
+const App = ({
+  styles,
+  user,
+  children,
+  location,
+  getMovies,
+  getSeasons,
+  userStatus,
+  userId,
+  group
+}) => {
+  const classes = useStyles();
+  const section = location.pathname.split("/")[2] || "home";
+  const tabs = {
+    predictions: [
+      { label: "Upcoming", link: "/app/predictions/upcoming" },
+      { label: "Purgatory", link: "/app/predictions/purgatory" },
+      { label: "Past", link: "/app/predictions/past" }
+    ],
+    leaderboard: [
+      // { label: "Seasons", link: "/app/leaderboard/seasons" },
+      { label: "Seasons", link: "/app/leaderboard/seasons" },
+      { label: "Overall", link: "/app/leaderboard/overall" }
+    ]
+  };
+
+  useEffect(() => {
+    getMovies();
+    getSeasons();
+  }, []);
+
+  if (!user && userId) {
+    return <Loader />;
   }
 
-  updateDimensions() {
-    let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-    this.props.updateDimensions(windowWidth);
+  if (!user) {
+    return <Redirect to={"/"} />;
   }
 
-  render() {
-    return <div>hey</div>;
-  }
-}
+  return (
+    <div>
+      <AppHeader>
+        {user && tabs[section] ? (
+          <Paper square elevation={0}>
+            <Tabs
+              value={location.pathname}
+              indicatorColor="secondary"
+              textColor="secondary"
+              variant="fullWidth"
+            >
+              {tabs[section].map((tab, i) => {
+                return (
+                  <Tab
+                    key={i}
+                    label={tab.label}
+                    value={tab.link}
+                    component={AdapterLink}
+                    to={tab.link}
+                  />
+                );
+              })}
+            </Tabs>
+          </Paper>
+        ) : null}
+      </AppHeader>
+      <Container
+        style={{ paddingTop: tabs[section] ? 150 : 100, paddingBottom: 150 }}
+        maxWidth={"md"}
+      >
+        {children}
+      </Container>{" "}
+      <BottomNavigation
+        className={classes.bottomNav}
+        value={location.pathname.split("/")[2] || "home"}
+        showLabels
+      >
+        {group ? (
+          <BottomNavigationAction
+            label="Leaderboard"
+            component={AdapterLink}
+            to={"/app/leaderboard/seasons"}
+            icon={<PeopleIcon />}
+            value={"leaderboard"}
+          />
+        ) : null}
+        <BottomNavigationAction
+          component={AdapterLink}
+          label="Home"
+          icon={<HomeIcon />}
+          to={"/app"}
+          value={"home"}
+        />
+        <BottomNavigationAction
+          component={AdapterLink}
+          to={"/app/predictions/upcoming"}
+          value={"predictions"}
+          label="Predictions"
+          icon={<MovieIcon />}
+        />
+      </BottomNavigation>
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   return {
     styles: state.styles,
-    user: state.user
+    user: state.user.user,
+    group: state.user.group,
+    userId: state.user.userId,
+    userStatus: state.user.status
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateDimensions: width => dispatch(Actions.styles.updateDimensions(width)),
-    userLogin: userId => dispatch(Actions.user.userLogin.request(userId))
+    getMovies: () => dispatch(Actions.movies.getMovies.request()),
+    getSeasons: () => dispatch(Actions.movies.getSeasons.request())
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(withRouter(App));

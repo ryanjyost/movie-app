@@ -4,16 +4,18 @@ import { Actions } from "../redux";
 import { Route } from "react-router-dom";
 import routes, { RouteWithSubRoutes } from "./routes";
 import Storage from "store";
-
 import { CssBaseline, Container } from "@material-ui/core";
+import Loader from "../components/misc/Loader";
+import Landing from "../components/routes/Landing";
 
 class Main extends React.Component {
-  state = {};
+  state = { didMount: false };
 
   componentDidMount() {
-    // this.updateDimensions();
-    // window.addEventListener("resize", this.updateDimensions.bind(this));
-    // this.handleUserOnMount();
+    this.updateDimensions();
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+    this.handleUserOnMount();
+    this.setState({ didMount: true });
   }
 
   componentWillUnmount() {
@@ -21,10 +23,8 @@ class Main extends React.Component {
   }
 
   handleUserOnMount() {
-    if (Storage.get("userId")) {
-      // get prev auth user
-      let userId = Storage.get("userId");
-      // this.props.userLogin(userId);
+    if (this.props.userId) {
+      this.props.getUser(this.props.userId);
     }
   }
 
@@ -34,11 +34,19 @@ class Main extends React.Component {
   }
 
   render() {
+    if (
+      !this.state.didMount ||
+      (this.props.userId &&
+        !this.props.user &&
+        !this.props.userStatus.fetchedUser)
+    ) {
+      return <Loader />;
+    }
     return (
       <div>
         <CssBaseline />
-
         {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+        {/*<Route component={Landing} />*/}
       </div>
     );
   }
@@ -47,14 +55,16 @@ class Main extends React.Component {
 const mapStateToProps = state => {
   return {
     styles: state.styles,
-    user: state.user
+    user: state.user.user,
+    userId: state.user.userId,
+    userStatus: state.user.status
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     updateDimensions: width => dispatch(Actions.styles.updateDimensions(width)),
-    userLogin: userId => dispatch(Actions.user.userLogin.request(userId))
+    getUser: userId => dispatch(Actions.user.getUser.request(userId))
   };
 };
 

@@ -9,8 +9,15 @@ import MovieSagas from "../sagas/movies";
 
 // REDUX
 import { Actions } from "../redux";
-const { getMovies, addMovie, editMovie } = Actions.movies;
-const { userLogin } = Actions.user;
+const { getMovies, getSeasons, addMovie, editMovie } = Actions.movies;
+const {
+  userLogin,
+  predictMovie,
+  getSeasonRankings,
+  getOverallRankings,
+  getUser,
+  getUserOverall
+} = Actions.user;
 const {
   getAllFeedback,
   respondToFeedback,
@@ -33,8 +40,14 @@ export default function*() {
     generateWatcher(getMovies, MovieSagas),
     generateWatcher(addMovie, MovieSagas),
     generateWatcher(editMovie, MovieSagas),
+    generateWatcher(getSeasons, MovieSagas),
     // users
     generateWatcher(userLogin, UserSagas),
+    generateWatcher(getUser, UserSagas),
+    generateWatcher(getUserOverall, UserSagas),
+    generateWatcher(predictMovie, UserSagas),
+    generateWatcher(getSeasonRankings, UserSagas),
+    generateWatcher(getOverallRankings, UserSagas),
     //admin
     generateWatcher(getAllFeedback, AdminSagas),
     generateWatcher(respondToFeedback, AdminSagas),

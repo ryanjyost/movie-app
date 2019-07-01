@@ -15,6 +15,16 @@ function* getMovies({ api, action }) {
   }
 }
 
+function* getSeasons({ api, action }) {
+  try {
+    const response = yield call(api.getSeasons);
+    yield put(action.success(response.data.seasons));
+  } catch (error) {
+    // // dispatch a failure action to the store with the error
+    yield put(action.failure(error));
+  }
+}
+
 function* addMovie({ api, action }, { payload }) {
   const { movie } = payload;
   try {
@@ -40,5 +50,6 @@ function* editMovie({ api, action }, { payload }) {
 export default {
   getMovies,
   addMovie,
-  editMovie
+  editMovie,
+  getSeasons
 };

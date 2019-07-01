@@ -41,7 +41,7 @@ export const generateReleaseText = (
   const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
 
   if (releaseDate.isBefore(cutoffDate)) {
-    return `1 minute`;
+    return `1 min`;
   }
 
   if (daysUntilCutoff > 0) {
@@ -53,10 +53,69 @@ export const generateReleaseText = (
   }
 
   if (minutesUntilCutoff > 0) {
-    return `${Math.round(minutesUntilCutoff)} minute${
-      minutesUntilCutoff === 1 ? "" : "s"
-    }`;
+    return `${Math.round(minutesUntilCutoff)} min`;
   }
 
-  return `1 minute`;
+  return `1 min`;
 };
+
+export const prepSortGroupPredictions = (members, movie) => {
+  return members
+    .map(member => {
+      let didPredict = member.votes
+        ? member.votes[movie._id]
+          ? member.votes[movie._id] > -1 && member.votes[movie._id] < 101
+          : false
+        : false;
+
+      if (!didPredict) {
+        return {
+          ...member,
+          ...{ prediction: null, didPredict, absDiff: null }
+        };
+      } else {
+        let absDiff = Math.abs(member.votes[movie._id] - movie.rtScore);
+        return {
+          ...member,
+          ...{ prediction: member.votes[movie._id], didPredict, absDiff }
+        };
+      }
+    })
+    .sort((a, b) => {
+      a = !a.didPredict ? 1001 : a.prediction;
+      b = !b.didPredict ? 1001 : b.prediction;
+
+      if (a < b) return -1;
+      if (b < a) return 1;
+      return 0;
+    });
+};
+
+export const makeGroupLabel = group => {
+  if (group && group.members) {
+    let text = ``;
+    for (let member of group.members) {
+      if (member.name !== "Movie Medium") {
+        text = text + " " + member.name;
+      }
+    }
+
+    return text;
+  } else {
+    return "";
+  }
+};
+
+export const makeSeasonLabel = season => {
+  let text = ``;
+  for (let i = 0; i < season.movies.length; i++) {
+    let title = season.movies[i].title;
+    text = text + title;
+    if (i < season.movies.length - 1) {
+      text = text + ", ";
+    }
+  }
+  return text;
+};
+
+export const emojiMap = [`🥇`, `🥈`, `🥉`];

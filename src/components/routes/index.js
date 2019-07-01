@@ -1,25 +1,68 @@
 import React from "react";
 import { Route } from "react-router-dom";
+
+// Top level routes
+import Landing from "./Landing";
 import AuthRedirect from "./AuthRedirect";
 import Admin from "./Admin";
+import TermsOfService from "./TermsOfService";
+import PrivacyPolicy from "./PrivacyPolicy";
+import Rules from "./Rules";
+import CreateGroup from "./CreateGroup";
+import SignIn from "./SignIn";
+
+// App
+import App from "./App";
+import Home from "./app/Home";
+import Upcoming from "./app/Upcoming";
+import Purgatory from "./app/Purgatory";
+import Past from "./app/Past";
+import Seasons from "./app/Seasons";
+import Overall from "./app/Overall";
+import NewUser from "./app/NewUser";
+import NewGroup from "./app/NewGroup";
 
 const appRoutes = [
   {
     path: "/app",
     exact: true,
-    component: () => <h1>Dashboard</h1>
+    title: "Home",
+    component: Home
   },
   {
-    path: "/app/upcoming",
-    component: () => <h1>upcoming</h1>
+    path: "/app/predictions/upcoming",
+    component: Upcoming,
+    title: "Predictions"
   },
   {
-    path: "/app/purgatory",
-    component: () => <h1>purgatory</h1>
+    path: "/app/predictions/purgatory",
+    component: Purgatory,
+    title: "Predictions"
   },
   {
-    path: "/app/past",
-    component: () => <h1>past</h1>
+    path: "/app/predictions/past",
+    component: Past,
+    title: "Predictions"
+  },
+  {
+    path: "/app/new-group",
+    component: NewGroup,
+    title: "Group Created"
+  },
+  {
+    path: "/app/new-user",
+    component: NewUser,
+    title: "Welcome"
+  },
+  {
+    path: "/app/leaderboard/seasons",
+    component: Seasons,
+    title: "Leaderboard"
+  },
+  {
+    path: "/app/leaderboard/overall",
+    component: Overall,
+    title: "Leaderboard"
   }
 ];
 
@@ -27,23 +70,32 @@ const routes = [
   {
     path: "/",
     exact: true,
-    component: () => (
-      <div>
-        skoosh <a href={process.env.REACT_APP_GROUPME_AUTH}>Sign in</a>
-      </div>
-    )
+    component: Landing
+  },
+  {
+    path: "/sign-in",
+    title: "Sign In",
+    component: SignIn
   },
   {
     path: "/create-group",
-    component: () => <h1>create group</h1>
+    title: "Create a group",
+    component: CreateGroup
   },
   {
     path: "/terms",
-    component: () => <h1>terms</h1>
+    title: "Terms of Use",
+    component: TermsOfService
   },
   {
     path: "/privacy",
-    component: () => <h1>privacy</h1>
+    title: "Privacy Policy",
+    component: PrivacyPolicy
+  },
+  {
+    path: "/rules",
+    title: "How To Play",
+    component: Rules
   },
   {
     path: "/admin",
@@ -57,15 +109,20 @@ const routes = [
     path: "/app",
     component: ({ routes }) => {
       return (
-        <div>
-          <h1>App</h1>
+        <App>
           {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-        </div>
+        </App>
       );
     },
     routes: appRoutes
   }
 ];
+
+export const allRoutes = [...routes, ...appRoutes].map(config => {
+  let copy = { ...config };
+  delete copy.component;
+  return copy;
+});
 
 export default routes;
 
