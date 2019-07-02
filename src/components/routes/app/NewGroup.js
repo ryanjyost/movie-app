@@ -7,6 +7,7 @@ const NewGroup = () => {
     <div>
       <AppHeader />
       <Container
+        maxWidth={"sm"}
         style={{
           display: "flex",
           flexDirection: "column",

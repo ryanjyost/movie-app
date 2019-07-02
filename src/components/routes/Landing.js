@@ -108,7 +108,8 @@ function Landing({ user, userId, userStatus }) {
           variant="contained"
           color="secondary"
           size={"large"}
-          href={process.env.REACT_APP_GROUPME_AUTH}
+          component={AdapterLink}
+          to={"/sign-up"}
         >
           <strong>Start Playing</strong>
         </Button>
@@ -159,7 +160,7 @@ function Landing({ user, userId, userStatus }) {
           when you make an exact prediction.
         </Typography>
 
-        <div>
+        <div style={{ marginTop: 50 }}>
           <Link
             component={AdapterLink}
             to={"/privacy"}
@@ -174,6 +175,9 @@ function Landing({ user, userId, userStatus }) {
           >
             Terms of Use
           </Link>
+          <Typography variant={"subtitle1"} color={"textSecondary"}>
+            All Rights Reserved. 2019 Movie Medium{" "}
+          </Typography>
         </div>
       </Container>
     </div>

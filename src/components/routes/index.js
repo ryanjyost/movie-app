@@ -10,6 +10,7 @@ import PrivacyPolicy from "./PrivacyPolicy";
 import Rules from "./Rules";
 import CreateGroup from "./CreateGroup";
 import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 // App
 import App from "./App";
@@ -76,6 +77,11 @@ const routes = [
     path: "/sign-in",
     title: "Sign In",
     component: SignIn
+  },
+  {
+    path: "/sign-up",
+    title: "Sign Up",
+    component: SignUp
   },
   {
     path: "/create-group",

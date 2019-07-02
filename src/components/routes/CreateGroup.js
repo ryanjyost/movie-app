@@ -34,7 +34,7 @@ const CreateGroup = ({ startCreatingGroup }) => {
     <div className={classes.main}>
       <AppHeader />
       <Container
-        maxWidth={"lg"}
+        maxWidth={"sm"}
         className={classes.centerContainer}
         style={{ paddingTop: 100 }}
       >

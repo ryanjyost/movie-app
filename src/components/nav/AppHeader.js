@@ -82,7 +82,11 @@ const SideList = ({ toggleDrawer }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
-        <ListItem component="a" button href={"mailto:ryanjyost@gmail.com"}>
+        <ListItem
+          component="a"
+          button
+          href={"mailto:ryanjyost@gmail.com?subject=Movie Medium"}
+        >
           <ListItemText primary={"Contact"} />
         </ListItem>
       </List>

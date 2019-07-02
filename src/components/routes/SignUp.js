@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles/index";
+import { Link } from "react-router-dom";
 import {
   Typography,
   Button,
@@ -11,7 +12,7 @@ import AdapterLink from "../nav/AdapterLink";
 
 const useStyles = makeStyles({});
 
-const SignIn = () => {
+const SignUp = () => {
   return (
     <Container
       maxWidth={"xs"}
@@ -24,7 +25,7 @@ const SignIn = () => {
         padding: "0px 20px"
       }}
     >
-      <Typography variant={"h5"}>Sign in with</Typography>
+      <Typography variant={"h5"}>Sign up with</Typography>
       <img
         src={"https://s3.amazonaws.com/moviemedium.io/images/misc/groupme.png"}
         width={150}
@@ -34,11 +35,19 @@ const SignIn = () => {
         href={process.env.REACT_APP_GROUPME_AUTH}
         variant={"contained"}
         color={"secondary"}
-        style={{ margin: "30px 0px" }}
-        size={"large"}
+        style={{ margin: "30px 0px 10px 0px" }}
       >
-        Sign in
+        Create group and start playing
       </Button>
+      <Typography
+        variant={"caption"}
+        align={"center"}
+        style={{ marginBottom: 20, color: "#a4a4a4" }}
+      >
+        By creating your new Movie Medium Group and the linked GroupMe chat, you
+        agree to our <Link to={"/terms"}>Terms of Service</Link> and{" "}
+        <Link to={"/privacy"}>Privacy Policy</Link>.
+      </Typography>
       <Typography
         variant={"caption"}
         color={"textSecondary"}
@@ -68,4 +77,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;
