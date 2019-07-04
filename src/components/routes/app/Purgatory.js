@@ -49,7 +49,7 @@ const SinglePlayer = ({ member, isUser }) => {
       </Typography>
       {member.didPredict ? (
         <Typography
-          variant={"subtitle2"}
+          variant={"subtitle1"}
           className={isUser ? classes.currentUserColor : null}
           style={{ fontWeight: "bold" }}
         >
@@ -61,7 +61,7 @@ const SinglePlayer = ({ member, isUser }) => {
           className={isUser ? classes.currentUserColor : null}
           style={{ opacity: 0.5 }}
         >
-          <strong>{member.didPredict ? member.prediction : "None"}</strong>
+          <strong>{"None"}</strong>
         </Typography>
       )}
     </div>
