@@ -19,6 +19,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-table": "^6.10.0",
+    "react-twitter-widgets": "^1.7.1",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
@@ -49,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "redux-devtools-extension": "^2.13.8"
   }
 }

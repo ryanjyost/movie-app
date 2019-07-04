@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Follow } from "react-twitter-widgets";
 import { Typography, Button, Card, CardContent } from "@material-ui/core";
 import AddToHomeScreenButton from "../../misc/AddToHomeScreenButton";
 import { makeStyles } from "@material-ui/core/styles/index";
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
   card: {
     width: "100%",
     maxWidth: 500,
-    marginBottom: 50
+    marginBottom: 30
   },
   cardContent: {
     display: "flex",
@@ -22,6 +23,11 @@ const useStyles = makeStyles({
   imgContainer: {
     width: 60,
     height: 80
+  },
+  twitter: {
+    backgroundColor: "#1b95e0",
+    border: "1px solid #1b95e0",
+    color: "#fff"
   }
 });
 
@@ -41,8 +47,11 @@ const Home = ({ currentUserOverall, getUserOverall, user }) => {
       {currentUserOverall && (
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
-            <Typography style={{ color: "rgba(0,0,0,0.5)" }} gutterBottom>
-              You average MM Metric
+            <Typography
+              style={{ color: "rgba(0,0,0,0.5)", marginTop: 10 }}
+              gutterBottom
+            >
+              Your average MM Metric
             </Typography>
             <strong>
               <Typography variant={"h4"} color={"secondary"}>
@@ -67,7 +76,23 @@ const Home = ({ currentUserOverall, getUserOverall, user }) => {
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Typography style={{ marginBottom: 20 }}>
-            <strong>Have friends who'd want to play?</strong>
+            Follow @movie_medium on the Twitters
+          </Typography>
+          <Button
+            href={"https://twitter.com/movie_medium"}
+            variant={"outlined"}
+            className={`${classes.twitter} twitter-follow-button`}
+            color={"secondary"}
+          >
+            Follow @movie_medium
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card className={classes.card}>
+        <CardContent className={classes.cardContent}>
+          <Typography style={{ marginBottom: 20 }}>
+            Have friends who'd want to play?
           </Typography>
           <Button
             component={AdapterLink}
