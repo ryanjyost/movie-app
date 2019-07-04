@@ -62,7 +62,8 @@ export const generateReleaseText = (
 export const prepSortGroupPredictions = (
   members,
   movie,
-  fieldToSortBy = "prediction"
+  fieldToSortBy = "prediction",
+  asc = false
 ) => {
   return members
     .map(member => {
@@ -89,8 +90,8 @@ export const prepSortGroupPredictions = (
       a = !a.didPredict ? 1001 : a[fieldToSortBy];
       b = !b.didPredict ? 1001 : b[fieldToSortBy];
 
-      if (a < b) return 1;
-      if (b < a) return -1;
+      if (a < b) return asc ? -1 : 1;
+      if (b < a) return asc ? 1 : -1;
       return 0;
     });
 };

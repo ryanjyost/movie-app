@@ -177,45 +177,58 @@ const Upcoming = ({
           moviesThatNeedPrediction.length
         } movies need your prediction`}</Typography>
       ) : null}
-      {upcomingMovies.map(movie => {
-        const releaseText = generateReleaseText(
-          movie.releaseDate,
-          moviePredictionCutoffDate
-        );
-        return (
-          <Card key={movie._id} className={classes.card}>
-            <MovieTrailer movie={movie} windowWidth={styles.windowWidth} />
-            <CardContent>
-              <Link
-                variant={"h6"}
-                href={movie.rtLink}
-                className={classes.title}
-                color="textPrimary"
-              >
-                <strong>{movie.title}</strong>{" "}
-              </Link>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  flexWrap: "wrap"
-                }}
-              >
-                <Typography
-                  color={"textSecondary"}
-                  className={classes.info}
-                  variant={"caption"}
-                  style={{ marginRight: 10 }}
+      {upcomingMovies
+        .sort((a, b) => {
+          a = a.releaseDate;
+          b = b.releaseDate;
+
+          if (a > b) return 1;
+          if (b > a) return -1;
+          return 0;
+        })
+        .map(movie => {
+          const releaseText = generateReleaseText(
+            movie.releaseDate,
+            moviePredictionCutoffDate
+          );
+          return (
+            <Card key={movie._id} className={classes.card}>
+              <MovieTrailer movie={movie} windowWidth={styles.windowWidth} />
+              <CardContent>
+                <Link
+                  variant={"h6"}
+                  href={movie.rtLink}
+                  className={classes.title}
+                  color="textPrimary"
                 >
-                  {`${releaseText} left to predict`}
-                </Typography>
-              </div>
-            </CardContent>
-            <Prediction movie={movie} user={user} predictMovie={predictMovie} />
-          </Card>
-        );
-      })}
+                  <strong>{movie.title}</strong>{" "}
+                </Link>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  <Typography
+                    color={"textSecondary"}
+                    className={classes.info}
+                    variant={"caption"}
+                    style={{ marginRight: 10 }}
+                  >
+                    {`${releaseText} left to predict`}
+                  </Typography>
+                </div>
+              </CardContent>
+              <Prediction
+                movie={movie}
+                user={user}
+                predictMovie={predictMovie}
+              />
+            </Card>
+          );
+        })}
     </React.Fragment>
   );
 };

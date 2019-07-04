@@ -209,7 +209,7 @@ const Past = ({ pastMovies, group, user, selectedSeason }) => {
         })
         .map((movie, i) => {
           const sortedPredictions = group
-            ? prepSortGroupPredictions(group.members, movie, "absDiff")
+            ? prepSortGroupPredictions(group.members, movie, "absDiff", true)
             : [];
           return (
             <Card key={movie._id} className={classes.card}>
