@@ -90,6 +90,13 @@ const Overall = ({ user, group, getOverallRankings, rankings }) => {
           </div>
         );
       })}
+      <Typography
+        variant={"subtitle2"}
+        color={"textSecondary"}
+        style={{ marginTop: 50 }}
+      >
+        Average MM Metric = how far off your prediction are, on average
+      </Typography>
     </div>
   );
 };

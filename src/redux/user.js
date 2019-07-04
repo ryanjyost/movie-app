@@ -7,36 +7,29 @@ const userLogin = createAction("USER_LOGIN", {
   request: (accessToken, createGroup) => ({ accessToken, createGroup }),
   success: user => ({ user })
 });
-
 const predictMovie = createAction("PREDICT_MOVIE", {
   request: (movieId, userId, prediction) => ({ movieId, userId, prediction }),
   success: user => ({ user })
 });
-
 const getSeasonRankings = createAction("GET_SEASON_RANKINGS", {
   request: (groupId, seasonId) => ({ groupId, seasonId }),
   success: rankings => ({ rankings })
 });
-
 const getOverallRankings = createAction("GET_OVERALL_RANKINGS", {
   request: groupId => ({ groupId }),
   success: rankings => ({ rankings })
 });
-
 const createGroup = createAction("CREATE_GROUP", {
   request: () => ({}),
   success: (group, user) => ({ group, user })
 });
-
 const switchGroup = createAction("SWITCH_GROUP", {
   request: groupId => ({ groupId })
 });
-
 const getUser = createAction("GET_USER", {
   request: userId => ({ userId }),
   success: user => ({ user })
 });
-
 const getUserOverall = createAction("GET_USER_OVERALL", {
   request: userId => ({ userId }),
   success: overall => ({ overall })
@@ -62,12 +55,14 @@ const initialState = {
   currentSeasonRankings: [],
   overallRankings: [],
   currentUserOverall: null,
+  flags: {
+    startCreatingGroup: false,
+    createGroup: false
+  },
   status: {
     userLogin: false,
     fetchedUser: false,
     predictMovie: false,
-    createGroup: false,
-    startCreatingGroup: false,
     error: null
   }
 };
@@ -77,15 +72,19 @@ export function reducer(state = initialState, action) {
   switch (action.type) {
     case createGroup.types.request:
       return update(state, {
-        status: {
+        flags: {
           startCreatingGroup: { $set: true }
+        },
+        status: {
+          error: { $set: false }
         }
       });
     case createGroup.types.success:
       return update(state, {
         user: { $set: payload.user },
+        group: { $set: payload.user.groups[0] },
         userId: { $set: payload.user._id },
-        status: {
+        flags: {
           startCreatingGroup: { $set: false },
           createGroup: { $set: true }
         }
@@ -95,8 +94,8 @@ export function reducer(state = initialState, action) {
       return update(state, {
         status: {
           userLogin: { $set: true },
-          createGroup: { $set: false },
-          fetchedUser: { $set: false }
+          fetchedUser: { $set: false },
+          error: { $set: false }
         }
       });
     case userLogin.types.success:
@@ -113,7 +112,8 @@ export function reducer(state = initialState, action) {
 
     case getUser.types.request:
       return update(state, {
-        fetchedUser: { $set: false }
+        fetchedUser: { $set: false },
+        error: { $set: false }
       });
     case getUser.types.success:
       return update(state, {
@@ -124,7 +124,9 @@ export function reducer(state = initialState, action) {
       });
 
     case getUserOverall.types.request:
-      return state;
+      return update(state, {
+        error: { $set: false }
+      });
     case getUserOverall.types.success:
       return update(state, {
         currentUserOverall: { $set: payload.overall }
@@ -133,7 +135,8 @@ export function reducer(state = initialState, action) {
     case predictMovie.types.request:
       return update(state, {
         status: {
-          predictMovie: { $set: true }
+          predictMovie: { $set: true },
+          error: { $set: false }
         }
       });
     case predictMovie.types.success:
@@ -180,4 +183,4 @@ export function reducer(state = initialState, action) {
   }
 }
 
-export default persist("user", ["userId", "status"], reducer);
+export default persist("user", ["userId", "flags"], reducer);

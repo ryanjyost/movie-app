@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles/index";
 import { Link } from "react-router-dom";
 import {
@@ -9,10 +10,14 @@ import {
   Container
 } from "@material-ui/core";
 import AdapterLink from "../nav/AdapterLink";
+import { Actions } from "../../redux";
 
 const useStyles = makeStyles({});
 
-const SignUp = () => {
+const SignUp = ({ startCreatingGroup }) => {
+  useEffect(() => {
+    startCreatingGroup();
+  }, []);
   return (
     <Container
       maxWidth={"xs"}
@@ -77,4 +82,21 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapStateToProps = state => {
+  return {
+    user: state.user.user,
+    accessToken: state.user.accessToken,
+    status: state.user.status
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    startCreatingGroup: () => dispatch(Actions.user.createGroup.request())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);

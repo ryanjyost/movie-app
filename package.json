@@ -29,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-staging": "aws s3 sync build/ s3://staging.moviemedium.io --delete",
+    "deploy-prod-dangerous": "aws s3 sync build/ s3://moviemedium.io --delete"
   },
   "eslintConfig": {
     "extends": "react-app"

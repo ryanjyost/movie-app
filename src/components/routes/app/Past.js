@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography, Link } from "@material-ui/core";
 import {
   makeStyles,
   withStyles,
@@ -12,6 +12,7 @@ import { prepSortGroupPredictions } from "../../../util";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ChooseGroup from "../../nav/ChooseGroup";
 import ChooseSeason from "../../nav/ChooseSeason";
+import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -70,6 +71,10 @@ const SinglePlayer = ({ member, isCurrentUser, movie, isSingle }) => {
   if (isSingle && member.prediction !== undefined) {
     member.didPredict = true;
     member.absDiff = Math.abs(member.prediction - movie.rtScore);
+  }
+
+  if (!member) {
+    return null;
   }
 
   return (
@@ -221,14 +226,18 @@ const Past = ({ pastMovies, group, user, selectedSeason }) => {
                       paddingBottom: 0
                     }}
                   >
-                    <Typography
+                    <Link
                       href={movie.rtLink}
                       color={"secondary"}
                       noWrap
                       variant={"subtitle2"}
+                      style={{ display: "flex", alignItems: "flex-end" }}
                     >
-                      Rotten Tomatoes Score
-                    </Typography>
+                      Rotten Tomatoes Score{" "}
+                      <OpenInBrowserIcon
+                        style={{ fontSize: 18, marginLeft: 5 }}
+                      />
+                    </Link>
 
                     <Typography
                       style={{ fontWeight: "bold" }}

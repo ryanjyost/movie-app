@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Actions } from "../../redux";
+import { Actions } from "../../redux/index";
 import AppHeader from "../nav/AppHeader";
 import { Container, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => {
   return {
@@ -69,7 +69,7 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     accessToken: state.user.accessToken,
-    status: state.user.status
+    flags: state.user.flags
   };
 };
 

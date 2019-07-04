@@ -64,9 +64,13 @@ const App = ({
     getSeasons();
   }, []);
 
-  if (!user && userId) {
+  if (!user && userId && !userStatus.fetchedUser) {
     return <Loader />;
   }
+
+  // if (user && !user.groups.length) {
+  //   return <Redirect to={"/create-group"} />;
+  // }
 
   if (!user) {
     return <Redirect to={"/"} />;

@@ -30,6 +30,7 @@ const appRoutes = [
     title: "Home",
     component: Home
   },
+
   {
     path: "/app/predictions/upcoming",
     component: Upcoming,

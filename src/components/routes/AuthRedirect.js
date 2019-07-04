@@ -15,26 +15,30 @@ class AuthRedirect extends Component {
   componentDidMount() {
     if (window.location.search) {
       let accessToken = window.location.search.replace("?access_token=", "");
-      this.props.userLogin(accessToken, this.props.status.startCreatingGroup);
+      this.props.userLogin(accessToken, this.props.flags.startCreatingGroup);
     }
 
     this.setState({ didMount: true });
   }
 
   render() {
-    const { user, status } = this.props;
+    const { user, flags } = this.props;
     const { didMount } = this.state;
 
     if (!didMount) {
       return <Loader text={"Authenticating..."} />;
     }
 
-    if (!didMount || status.startCreatingGroup) {
-      return <Loader text={""} />;
+    if (!didMount || flags.startCreatingGroup) {
+      return <Loader text={"Creating group..."} />;
+    }
+
+    if (user && !user.groups.length) {
+      return <Redirect to={"/create-group"} />;
     }
 
     if (user) {
-      if (status.createGroup) {
+      if (flags.createGroup) {
         return <Redirect to={"/app/new-group"} />;
       }
 
@@ -53,7 +57,8 @@ const mapStateToProps = state => {
   return {
     styles: state.styles,
     user: state.user.user,
-    status: state.user.status
+    status: state.user.status,
+    flags: state.user.flags
   };
 };
 

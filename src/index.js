@@ -45,23 +45,23 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/sw.js`).then(
-      function(registration) {
-        // Registration was successful
-        console.log(
-          "ServiceWorker registration successful with scope: ",
-          registration.scope
-        );
-      },
-      function(err) {
-        // registration failed :(
-        console.log("ServiceWorker registration failed: ", err);
-      }
-    );
-  });
-}
+// if ("serviceWorker" in navigator) {
+//   window.addEventListener("load", function() {
+//     navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/sw.js`).then(
+//       function(registration) {
+//         // Registration was successful
+//         console.log(
+//           "ServiceWorker registration successful with scope: ",
+//           registration.scope
+//         );
+//       },
+//       function(err) {
+//         // registration failed :(
+//         console.log("ServiceWorker registration failed: ", err);
+//       }
+//     );
+//   });
+// }
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

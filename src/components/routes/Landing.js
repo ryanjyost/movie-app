@@ -138,8 +138,8 @@ function Landing({ user, userId, userStatus }) {
           Sign Up
         </Typography>
         <Typography className={classes.sectionInfo}>
-          You can choose to play solo, or create a group and play with friends.
-          Groups are linked to GroupMe chats.
+          Create a group and play with friends. Groups are linked to GroupMe
+          chats.
         </Typography>
 
         <MovieIcon className={classes.icon} />
