@@ -59,7 +59,11 @@ export const generateReleaseText = (
   return `1 min`;
 };
 
-export const prepSortGroupPredictions = (members, movie) => {
+export const prepSortGroupPredictions = (
+  members,
+  movie,
+  fieldToSortBy = "prediction"
+) => {
   return members
     .map(member => {
       let didPredict = member.votes
@@ -82,11 +86,11 @@ export const prepSortGroupPredictions = (members, movie) => {
       }
     })
     .sort((a, b) => {
-      a = !a.didPredict ? 1001 : a.prediction;
-      b = !b.didPredict ? 1001 : b.prediction;
+      a = !a.didPredict ? 1001 : a[fieldToSortBy];
+      b = !b.didPredict ? 1001 : b[fieldToSortBy];
 
-      if (a < b) return -1;
-      if (b < a) return 1;
+      if (a < b) return 1;
+      if (b < a) return -1;
       return 0;
     });
 };

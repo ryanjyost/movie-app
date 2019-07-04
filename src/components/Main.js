@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Actions } from "../redux";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import routes, { RouteWithSubRoutes } from "./routes";
 import Storage from "store";
 import { CssBaseline, Container } from "@material-ui/core";
@@ -45,8 +45,10 @@ class Main extends React.Component {
     return (
       <div>
         <CssBaseline />
-        {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-        {/*<Route component={Landing} />*/}
+        <Switch>
+          {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+          <Route component={Landing} />
+        </Switch>
       </div>
     );
   }

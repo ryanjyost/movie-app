@@ -43,14 +43,12 @@ const MovieTitleWithPoster = ({ movie }) => {
             className={classes.img}
             component="img"
             alt={movie.title}
-            image={`https://s3.amazonaws.com/moviemedium.io/images/movies/${
-              movie.poster
-            }`}
+            image={`https://mm-posters.s3.amazonaws.com/${movie.poster}`}
           />
         </div>
       )}
       <Link
-        variant={"subtitle1"}
+        variant={"body1"}
         href={movie.rtLink}
         className={classes.title}
         color="textPrimary"

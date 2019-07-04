@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
   },
   title: {},
   currentUserColor: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    fontWeight: "bold"
   }
 }));
 
@@ -40,11 +41,15 @@ const SinglePlayer = ({ member, isUser }) => {
         marginBottom: 2
       }}
     >
-      <Typography className={isUser ? classes.currentUserColor : null}>
-        <strong>{isUser ? "Your prediction" : member.name}</strong>
+      <Typography
+        className={isUser ? classes.currentUserColor : null}
+        variant={"subtitle2"}
+      >
+        {isUser ? "Your prediction" : member.name}
       </Typography>
       {member.didPredict ? (
         <Typography
+          variant={"subtitle2"}
           className={isUser ? classes.currentUserColor : null}
           style={{ fontWeight: "bold" }}
         >
@@ -52,6 +57,7 @@ const SinglePlayer = ({ member, isUser }) => {
         </Typography>
       ) : (
         <Typography
+          variant={"subtitle2"}
           className={isUser ? classes.currentUserColor : null}
           style={{ opacity: 0.5 }}
         >
