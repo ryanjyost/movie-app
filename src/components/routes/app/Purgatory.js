@@ -83,33 +83,42 @@ const Purgatory = ({ purgatoryMovies, group, user }) => {
       >
         <ChooseGroup />
       </div>
-      {purgatoryMovies.map((movie, i) => {
-        const sortedPredictions = group
-          ? prepSortGroupPredictions(group.members, movie)
-          : [];
+      {purgatoryMovies
+        .sort((a, b) => {
+          a = a.releaseDate;
+          b = b.releaseDate;
 
-        return (
-          <Card key={movie._id} className={classes.card}>
-            <MovieTitleWithPoster movie={movie} />
-            <CardContent>
-              {group ? (
-                sortedPredictions.map((member, i) => {
-                  if (member.isMM) return null;
-                  return (
-                    <SinglePlayer
-                      key={i}
-                      member={member}
-                      isUser={member._id === user._id}
-                    />
-                  );
-                })
-              ) : (
-                <SinglePlayer member={user} isUser={true} />
-              )}
-            </CardContent>
-          </Card>
-        );
-      })}
+          if (a > b) return 1;
+          if (b > a) return -1;
+          return 0;
+        })
+        .map((movie, i) => {
+          const sortedPredictions = group
+            ? prepSortGroupPredictions(group.members, movie)
+            : [];
+
+          return (
+            <Card key={movie._id} className={classes.card}>
+              <MovieTitleWithPoster movie={movie} />
+              <CardContent>
+                {group ? (
+                  sortedPredictions.map((member, i) => {
+                    if (member.isMM) return null;
+                    return (
+                      <SinglePlayer
+                        key={i}
+                        member={member}
+                        isUser={member._id === user._id}
+                      />
+                    );
+                  })
+                ) : (
+                  <SinglePlayer member={user} isUser={true} />
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
     </React.Fragment>
   );
 };

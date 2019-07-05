@@ -207,6 +207,14 @@ const Past = ({ pastMovies, group, user, selectedSeason }) => {
             return true;
           }
         })
+        .sort((a, b) => {
+          a = a.releaseDate;
+          b = b.releaseDate;
+
+          if (a > b) return 1;
+          if (b > a) return -1;
+          return 0;
+        })
         .map((movie, i) => {
           const sortedPredictions = group
             ? prepSortGroupPredictions(group.members, movie, "absDiff", true)
