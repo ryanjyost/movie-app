@@ -32,7 +32,7 @@ const SignUp = ({ startCreatingGroup }) => {
     >
       <Typography variant={"h5"}>Sign up with</Typography>
       <img
-        src={"https://s3.amazonaws.com/moviemedium.io/images/misc/groupme.png"}
+        src={"https://moviemedium-assets.s3.amazonaws.com/groupme_logo.png"}
         width={150}
       />
 

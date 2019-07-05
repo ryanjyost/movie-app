@@ -87,8 +87,8 @@ export const prepSortGroupPredictions = (
       }
     })
     .sort((a, b) => {
-      a = !a.didPredict ? 1001 : a[fieldToSortBy];
-      b = !b.didPredict ? 1001 : b[fieldToSortBy];
+      a = !a.didPredict ? (asc ? 1001 : -1) : a[fieldToSortBy];
+      b = !b.didPredict ? (asc ? 1001 : -1) : b[fieldToSortBy];
 
       if (a < b) return asc ? -1 : 1;
       if (b < a) return asc ? 1 : -1;
