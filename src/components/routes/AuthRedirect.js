@@ -22,8 +22,12 @@ class AuthRedirect extends Component {
   }
 
   render() {
-    const { user, flags } = this.props;
+    const { user, flags, status } = this.props;
     const { didMount } = this.state;
+
+    if (status && status.error) {
+      return <Redirect to={"/"} />;
+    }
 
     if (!didMount) {
       return <Loader text={"Authenticating..."} />;
