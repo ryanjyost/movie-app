@@ -107,7 +107,6 @@ class Admin extends Component {
 
   render() {
     const { tab } = this.state;
-    console.log(this.props.user);
 
     if (!this.props.user) {
       return <Loader />;
@@ -669,6 +668,15 @@ class Admin extends Component {
       );
     };
 
+    const renderStats = () => {
+      return (
+        <div>
+          <h4>Users: {this.props.stats.users}</h4>
+          <h4>Groups: {this.props.stats.groups}</h4>
+        </div>
+      );
+    };
+
     const renderCurrentContent = () => {
       let content = null;
       switch (tab) {
@@ -689,6 +697,9 @@ class Admin extends Component {
           break;
         case 5:
           content = renderHttpLogs();
+          break;
+        case 6:
+          content = renderStats();
           break;
         default:
           return null;
@@ -728,6 +739,7 @@ class Admin extends Component {
             <Tab label="Message All" />
             <Tab label="Logs" />
             <Tab label="HTTP Logs" />
+            <Tab label="Stats" />
           </Tabs>
         </AppBar>
 
@@ -746,7 +758,8 @@ const mapStateToProps = state => {
     otherLogs,
     httpLogs,
     movies: state.movies.movies,
-    moviePredictionCutoffDate: state.movies.moviePredictionCutoffDate
+    moviePredictionCutoffDate: state.movies.moviePredictionCutoffDate,
+    stats: state.admin.stats
   };
 };
 

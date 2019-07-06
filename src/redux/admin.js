@@ -31,7 +31,8 @@ const initialState = {
   feedback: [],
   logs: [],
   httpLogs: [],
-  otherLogs: []
+  otherLogs: [],
+  stats: null
 };
 
 export function reducer(state = initialState, action) {
@@ -39,7 +40,8 @@ export function reducer(state = initialState, action) {
   switch (action.type) {
     case getAllFeedback.types.success:
       return update(state, {
-        feedback: { $set: payload.feedback }
+        feedback: { $set: payload.feedback.feedback },
+        stats: { $set: payload.feedback.stats }
       });
     case respondToFeedback.types.success:
       const oldFeedback = [...state.feedback];

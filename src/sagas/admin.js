@@ -3,7 +3,7 @@ import { call, put } from "redux-saga/effects";
 function* getAllFeedback({ api, action }) {
   try {
     const response = yield call(api.getAllFeedback);
-    yield put(action.success(response.data.feedback));
+    yield put(action.success(response.data));
   } catch (error) {
     // // dispatch a failure action to the store with the error
     yield put(action.failure(error));
@@ -26,7 +26,7 @@ function* messageAll({ api, action }, { payload }) {
   const { message } = payload;
   try {
     const response = yield call(api.messageAll, message);
-    yield put(action.success(response.data));
+    yield put(action.success(response.data.logs));
   } catch (error) {
     console.log(error);
     // // dispatch a failure action to the store with the error
