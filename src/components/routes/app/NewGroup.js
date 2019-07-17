@@ -1,8 +1,10 @@
 import React from "react";
 import AppHeader from "../../nav/AppHeader";
-import { Typography, Container } from "@material-ui/core";
+import { Typography, Container, Link } from "@material-ui/core";
+import { connect } from "react-redux";
+import { Actions } from "../../../redux";
 
-const NewGroup = () => {
+const NewGroup = ({ group }) => {
   return (
     <div>
       <AppHeader />
@@ -16,23 +18,46 @@ const NewGroup = () => {
       >
         <img
           style={{ borderRadius: 5 }}
-          src={
-            "https://s3.amazonaws.com/moviemedium.io/images/memes/great-success.jpg"
-          }
+          src={"https://moviemedium-assets.s3.amazonaws.com/great_success.jpg"}
           width={300}
         />
 
         <Typography variant={"h5"} align={"center"} style={{ marginTop: 20 }}>
           <strong>You've got a new group</strong>
         </Typography>
-        <Typography align={"center"}>
-          Check your GroupMe, there's a new chat that's ready for action. Start
-          inviting people to the GroupMe chat and they'll be ready to start
-          losing to you.
-        </Typography>
+        {group ? (
+          group.platform === "slack" ? (
+            <Link
+              variant={"h6"}
+              align={"center"}
+              href={`https://slack.com/app_redirect?channel=${group.slackId}`}
+            >
+              Click here to go to your new #moviemedium Slack channel
+            </Link>
+          ) : (
+            <Typography align={"center"}>
+              Check your GroupMe, there's a new chat that's ready for action.
+              Start inviting people to the GroupMe chat and they'll be ready to
+              start losing to you.
+            </Typography>
+          )
+        ) : null}
       </Container>
     </div>
   );
 };
 
-export default NewGroup;
+const mapStateToProps = state => {
+  return {
+    group: state.user.group
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewGroup);

@@ -8,8 +8,11 @@ import {
   Container
 } from "@material-ui/core";
 import AdapterLink from "../nav/AdapterLink";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({});
+
+console.log(process.env.REACT_APP_SLACK_CLIENT_ID);
 
 const SignIn = () => {
   return (
@@ -24,46 +27,41 @@ const SignIn = () => {
         padding: "0px 20px"
       }}
     >
-      <Typography variant={"h5"}>Sign in with</Typography>
-      <img
-        src={"https://moviemedium-assets.s3.amazonaws.com/groupme_logo.png"}
-        width={150}
-      />
+      <Typography variant={"h5"} style={{ marginBottom: 20 }} align={"center"}>
+        Sign In
+      </Typography>
+      <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=508509281558.675161543139&&state=skoosh&redirect_uri=http://localhost:3000/auth-redirect&state=skoosh">
+        <img src="https://api.slack.com/img/sign_in_with_slack.png" />
+      </a>
 
       <Button
         href={process.env.REACT_APP_GROUPME_AUTH}
-        variant={"contained"}
-        color={"secondary"}
-        style={{ margin: "30px 0px" }}
-        size={"large"}
+        variant={"outlined"}
+        style={{
+          margin: "30px 0px 10px 0px",
+          backgroundColor: "#00aff0",
+          color: "#fff",
+          border: "1px solid #00aff0",
+          marginTop: 20
+        }}
       >
-        Sign in
+        <img
+          src={"https://moviemedium-assets.s3.amazonaws.com/groupme_icon.png"}
+          width={30}
+          style={{ marginRight: 5 }}
+        />{" "}
+        Sign in with GroupMe
       </Button>
+
       <Typography
         variant={"caption"}
-        color={"textSecondary"}
-        style={{ padding: " 10px 0px", borderTop: "1px solid #a4a4a4" }}
+        align={"center"}
+        style={{ marginTop: 40, color: "#a4a4a4" }}
       >
-        Currently, the only way to play the Movie Medium game is with a{" "}
-        <a href={"https://groupme.com/en-US/"}>GroupMe (chat application)</a>{" "}
-        account.
-        <br /> <br />Why? To allow groups to play within GroupMe. Also because
-        the makers are lazy and strapped for time.
-        <br /> <br />If you don't have/like GroupMe, and want another way to
-        play,{" "}
-        <a href={"mailto:ryanjyost@gmail.com"}>
-          shoot me (Ryan, maker of this thing) an email
-        </a>. I will respond to you personally and make updates based on the
-        most popular feedback.
+        By playing Movie Medium and using the related social platform stuff, you
+        agree to our <Link to={"/terms"}>Terms of Service</Link> and{" "}
+        <Link to={"/privacy"}>Privacy Policy</Link>.
       </Typography>
-      <Button
-        href={"mailto:ryanjyost@gmail.com?subject=Movie Medium"}
-        variant={"outlined"}
-        color={"primary"}
-        style={{ marginTop: 10 }}
-      >
-        Send feedback
-      </Button>
     </Container>
   );
 };

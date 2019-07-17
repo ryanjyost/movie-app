@@ -4,7 +4,10 @@ import { persist } from "./persist";
 const { createAction } = Helpers;
 
 const userLogin = createAction("USER_LOGIN", {
-  request: (accessToken, createGroup) => ({ accessToken, createGroup }),
+  request: (accessToken, platform) => ({
+    accessToken,
+    platform
+  }),
   success: user => ({ user })
 });
 const predictMovie = createAction("PREDICT_MOVIE", {
@@ -35,6 +38,11 @@ const getUserOverall = createAction("GET_USER_OVERALL", {
   success: overall => ({ overall })
 });
 
+const createSlackChannel = createAction("CREATE_SLACK_CHANNEL", {
+  request: code => ({ code }),
+  success: (user, group) => ({ user, group })
+});
+
 export const actions = {
   userLogin,
   predictMovie,
@@ -43,7 +51,8 @@ export const actions = {
   createGroup,
   switchGroup,
   getUser,
-  getUserOverall
+  getUserOverall,
+  createSlackChannel
 };
 
 // reducer with initial state
@@ -55,10 +64,6 @@ const initialState = {
   currentSeasonRankings: [],
   overallRankings: [],
   currentUserOverall: null,
-  flags: {
-    startCreatingGroup: false,
-    createGroup: false
-  },
   status: {
     userLogin: false,
     fetchedUser: false,
@@ -71,10 +76,8 @@ export function reducer(state = initialState, action) {
   const { payload } = action;
   switch (action.type) {
     case createGroup.types.request:
+    case createSlackChannel.types.request:
       return update(state, {
-        flags: {
-          startCreatingGroup: { $set: true }
-        },
         status: {
           error: { $set: false }
         }
@@ -83,13 +86,14 @@ export function reducer(state = initialState, action) {
       return update(state, {
         user: { $set: payload.user },
         group: { $set: payload.user.groups[0] },
-        userId: { $set: payload.user._id },
-        flags: {
-          startCreatingGroup: { $set: false },
-          createGroup: { $set: true }
-        }
+        userId: { $set: payload.user._id }
       });
-
+    case createSlackChannel.types.success:
+      return update(state, {
+        user: { $set: payload.user },
+        group: { $set: payload.group },
+        userId: { $set: payload.user._id }
+      });
     case userLogin.types.request:
       return update(state, {
         status: {
@@ -109,7 +113,6 @@ export function reducer(state = initialState, action) {
           fetchedUser: { $set: true }
         }
       });
-
     case getUser.types.request:
       return update(state, {
         fetchedUser: { $set: false },
@@ -122,7 +125,6 @@ export function reducer(state = initialState, action) {
         group: { $set: payload.user.groups[0] },
         fetchedUser: { $set: true }
       });
-
     case getUserOverall.types.request:
       return update(state, {
         error: { $set: false }
@@ -131,7 +133,6 @@ export function reducer(state = initialState, action) {
       return update(state, {
         currentUserOverall: { $set: payload.overall }
       });
-
     case predictMovie.types.request:
       return update(state, {
         status: {
@@ -149,17 +150,14 @@ export function reducer(state = initialState, action) {
           predictMovie: { $set: false }
         }
       });
-
     case getSeasonRankings.types.success:
       return update(state, {
         currentSeasonRankings: { $set: payload.rankings }
       });
-
     case getOverallRankings.types.success:
       return update(state, {
         overallRankings: { $set: payload.rankings }
       });
-
     case switchGroup.types.request:
       const newGroup = state.user.groups.find(
         group => group._id === payload.groupId
@@ -172,11 +170,16 @@ export function reducer(state = initialState, action) {
       } else {
         return state;
       }
-
     case userLogin.types.failure:
     case getUser.types.failure:
+    case createGroup.types.failure:
+    case createSlackChannel.types.failure:
       return update(state, {
-        status: { error: { $set: true }, fetchedUser: { $set: true } }
+        userId: { $set: null },
+        status: {
+          error: { $set: true },
+          fetchedUser: { $set: true }
+        }
       });
     default:
       return state;

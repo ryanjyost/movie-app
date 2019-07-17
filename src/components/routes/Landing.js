@@ -138,8 +138,8 @@ function Landing({ user, userId, userStatus }) {
           Sign Up
         </Typography>
         <Typography className={classes.sectionInfo}>
-          Create a group and play with friends. Groups are linked to GroupMe
-          chats.
+          Create a group and play with friends. Each group is linked to a Slack
+          channel or GroupMe chat. Dealer's choice.
         </Typography>
 
         <MovieIcon className={classes.icon} />

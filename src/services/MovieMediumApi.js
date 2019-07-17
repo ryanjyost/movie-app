@@ -18,7 +18,8 @@ const createApi = () => {
 
   //============
   // users
-  const loginUser = access_token => api.post("/users/login", { access_token });
+  const loginUser = (access_token, platform) =>
+    api.post(`/users/login/${platform}`, { access_token });
 
   const getUser = userId => api.get(`/users/${userId}`);
 
@@ -34,6 +35,9 @@ const createApi = () => {
 
   const createGroup = (accessToken, user) =>
     api.post("/groups/create", { accessToken, user });
+
+  const createSlackChannel = code =>
+    api.post("/slack/create_channel", { code });
 
   //============
   // admin
@@ -58,6 +62,7 @@ const createApi = () => {
     editMovie,
     loginUser,
     getUser,
+    createSlackChannel,
     getUserOverall,
     createGroup,
     predictMovie,
