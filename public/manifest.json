@@ -1,10 +1,5 @@
 {
- "name": "Movie Medium",
- "short_name": "MovieMedium",
- "start_url": "/index.html",
- "display": "browser",
- "background_color": "#3f51b5",
- "theme_color": "#f50057",
+ "name": "App",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
