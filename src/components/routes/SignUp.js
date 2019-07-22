@@ -33,7 +33,13 @@ const SignUp = ({ startCreatingGroup }) => {
       <Typography variant={"h5"} style={{ marginBottom: 30 }} gutterBottom>
         Sign Up
       </Typography>
-      <a href="https://slack.com/oauth/authorize?scope=channels:write,bot,channels:read,groups:read,chat:write:bot,commands&client_id=508509281558.675161543139&&state=skoosh&redirect_uri=http://localhost:3000/auth-redirect&state=mmSignIn">
+      <a
+        href={`https://slack.com/oauth/authorize?scope=channels:write,bot,channels:read,groups:read,chat:write:bot,commands,users:read&client_id=${
+          process.env.REACT_APP_SLACK_CLIENT_ID
+        }&&state=skoosh&redirect_uri=${
+          process.env.REACT_APP_CLIENT_URL
+        }/auth-redirect&state=mmSignIn`}
+      >
         <img
           alt="Add to Slack"
           height="40"
@@ -62,6 +68,14 @@ const SignUp = ({ startCreatingGroup }) => {
         />{" "}
         Play in GroupMe
       </Button>
+
+      <Typography
+        variant={"subtitle1"}
+        align={"center"}
+        style={{ marginTop: 20, color: "#333" }}
+      >
+        Already invited to a group? <Link to={"/sign-in"}>Sign In</Link>
+      </Typography>
 
       <Typography
         variant={"caption"}

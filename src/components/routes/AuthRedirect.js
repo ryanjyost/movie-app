@@ -25,10 +25,7 @@ class AuthRedirect extends Component {
       } else if (window.location.search.includes("code")) {
         // Slack
         let code = window.location.search.replace("?code=", "").split("&")[0];
-        console.log(window.location.search);
-        if (window.location.search.includes("mmSignUp")) {
-          this.props.createSlackChannel(code);
-        } else if (window.location.search.includes("mmSignIn")) {
+        if (window.location.search.includes("mmSignIn")) {
           this.props.userLogin(code, "slack");
         }
 

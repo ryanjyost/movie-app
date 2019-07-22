@@ -6,7 +6,16 @@ function* userLogin({ api, action }, { payload }) {
 
   try {
     const response = yield call(api.loginUser, accessToken, platform);
-    yield put(action.success(response.data.user, response.data.group));
+    console.log("RESPONSE!", response);
+    if (
+      response.data.user &&
+      response.data.user.groups &&
+      response.data.user.groups.length
+    ) {
+      yield put(action.success(response.data.user));
+    } else {
+      yield put(action.failure(response.data));
+    }
   } catch (error) {
     yield put(action.failure(error));
   }
@@ -46,7 +55,12 @@ function* getUser({ api, action }, { payload }) {
   const { userId } = payload;
   try {
     const response = yield call(api.getUser, userId);
-    yield put(action.success(response.data.user));
+    console.log("RESPONSE", response);
+    if (response.data.user) {
+      yield put(action.success(response.data.user));
+    } else {
+      yield put(action.failure(response.data));
+    }
   } catch (error) {
     yield put(action.failure(error));
   }

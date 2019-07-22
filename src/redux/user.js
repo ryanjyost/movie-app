@@ -8,7 +8,8 @@ const userLogin = createAction("USER_LOGIN", {
     accessToken,
     platform
   }),
-  success: user => ({ user })
+  success: user => ({ user }),
+  failure: error => ({ error })
 });
 const predictMovie = createAction("PREDICT_MOVIE", {
   request: (movieId, userId, prediction) => ({ movieId, userId, prediction }),
@@ -171,16 +172,26 @@ export function reducer(state = initialState, action) {
         return state;
       }
     case userLogin.types.failure:
-    case getUser.types.failure:
-    case createGroup.types.failure:
-    case createSlackChannel.types.failure:
+      console.log("PAYLOAD", payload);
       return update(state, {
-        userId: { $set: null },
         status: {
-          error: { $set: true },
+          error: { $set: payload.error || true },
           fetchedUser: { $set: true }
         }
       });
+    case getUser.types.failure:
+      return update(state, {
+        user: { $set: null },
+        userId: { $set: null },
+        status: {
+          error: { $set: payload.error || true },
+          fetchedUser: { $set: true }
+        }
+      });
+    case createGroup.types.failure:
+    case createSlackChannel.types.failure:
+      break;
+
     default:
       return state;
   }

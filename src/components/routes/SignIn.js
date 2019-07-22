@@ -30,8 +30,20 @@ const SignIn = () => {
       <Typography variant={"h5"} style={{ marginBottom: 20 }} align={"center"}>
         Sign In
       </Typography>
-      <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=508509281558.675161543139&&state=skoosh&redirect_uri=http://localhost:3000/auth-redirect&state=skoosh">
-        <img src="https://api.slack.com/img/sign_in_with_slack.png" />
+      <a
+        href={`https://slack.com/oauth/authorize?scope=identity.basic&client_id=${
+          process.env.REACT_APP_SLACK_CLIENT_ID
+        }&state=mmSignIn&redirect_uri=${
+          process.env.REACT_APP_CLIENT_URL
+        }/auth-redirect&state=mmSignIn`}
+      >
+        <img
+          alt="Sign in with Slack"
+          height="42"
+          width="180"
+          src="https://platform.slack-edge.com/img/sign_in_with_slack.png"
+          srcSet="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x"
+        />
       </a>
 
       <Button
@@ -52,6 +64,14 @@ const SignIn = () => {
         />{" "}
         Sign in with GroupMe
       </Button>
+
+      <Typography
+        variant={"subtitle1"}
+        align={"center"}
+        style={{ marginTop: 20, color: "#333" }}
+      >
+        Not invited to a group yet? <Link to={"/sign-up"}>Sign Up</Link>
+      </Typography>
 
       <Typography
         variant={"caption"}

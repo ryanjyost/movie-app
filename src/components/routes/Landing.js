@@ -4,13 +4,12 @@ import {
   Typography,
   Button,
   Container,
-  AppBar,
   Toolbar,
-  StepLabel,
-  StepButton,
-  Step,
-  Link
+  Link,
+  Snackbar,
+  IconButton
 } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Actions } from "../../redux";
@@ -59,6 +58,31 @@ const useStyles = makeStyles(theme => {
 });
 
 function Landing({ user, userId, userStatus }) {
+  const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState(
+    "Something went wrong."
+  );
+
+  React.useEffect(() => {
+    if (userStatus.error) {
+      console.log(userStatus.error);
+      setOpen(true);
+      setErrorMessage(
+        userStatus.error && userStatus.error.error
+          ? userStatus.error.error
+          : "Something went wrong"
+      );
+    }
+  }, []);
+
+  function handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  }
+
   const classes = useStyles();
   if (!user && userId && !userStatus.fetchedUser) {
     return <Loader />;
@@ -180,6 +204,29 @@ function Landing({ user, userId, userStatus }) {
           </Typography>
         </div>
       </Container>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        ContentProps={{
+          "aria-describedby": "message-id"
+        }}
+        message={errorMessage}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        ]}
+      />
     </div>
   );
 }
