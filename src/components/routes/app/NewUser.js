@@ -23,7 +23,7 @@ const NewUser = () => {
           <strong>Welcome to Movie Medium!</strong>
         </Typography>
         <Typography align={"center"}>
-          You're ready to start predicting movies and kicking ass.
+          You're ready to start predicting movies.
         </Typography>
       </Container>
     </div>
