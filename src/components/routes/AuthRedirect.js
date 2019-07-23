@@ -63,7 +63,7 @@ class AuthRedirect extends Component {
         return <Redirect to={"/app/new-group"} />;
       }
 
-      return <Redirect to={"/app"} />;
+      return <Redirect to={"/app/leaderboard/seasons"} />;
     }
 
     return <Loader text={"Doing stuff..."} />;

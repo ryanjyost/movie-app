@@ -89,7 +89,7 @@ function Landing({ user, userId, userStatus }) {
   }
 
   if (user) {
-    return <Redirect to={"/app"} />;
+    return <Redirect to={"/app/leaderboard/seasons"} />;
   }
 
   return (
