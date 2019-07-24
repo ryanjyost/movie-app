@@ -36,9 +36,7 @@ const SignUp = ({ startCreatingGroup }) => {
       <a
         href={`https://slack.com/oauth/authorize?scope=channels:write,bot,channels:read,groups:read,chat:write:bot,commands,users:read&client_id=${
           process.env.REACT_APP_SLACK_CLIENT_ID
-        }&&state=skoosh&redirect_uri=${
-          process.env.REACT_APP_CLIENT_URL
-        }/auth-redirect&state=mmSignIn`}
+        }&redirect_uri=${process.env.REACT_APP_CLIENT_URL}/auth-redirect`}
       >
         <img
           alt="Add to Slack"

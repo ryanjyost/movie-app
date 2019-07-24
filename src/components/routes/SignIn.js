@@ -21,9 +21,7 @@ const SignIn = () => {
       <a
         href={`https://slack.com/oauth/authorize?scope=identity.basic&client_id=${
           process.env.REACT_APP_SLACK_CLIENT_ID
-        }&state=mmSignIn&redirect_uri=${
-          process.env.REACT_APP_CLIENT_URL
-        }/auth-redirect&state=mmSignIn`}
+        }&redirect_uri=${process.env.REACT_APP_CLIENT_URL}/auth-redirect`}
       >
         <img
           alt="Sign in with Slack"
