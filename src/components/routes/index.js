@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 // Top level routes
 import Landing from "./Landing";
+import LandingSlack from "./LandingSlack";
 import AuthRedirect from "./AuthRedirect";
 import Admin from "./Admin";
 import TermsOfService from "./TermsOfService";
@@ -73,6 +74,11 @@ const routes = [
     path: "/",
     exact: true,
     component: Landing
+  },
+  {
+    path: "/slack",
+    exact: true,
+    component: LandingSlack
   },
   {
     path: "/sign-in",
