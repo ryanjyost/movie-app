@@ -26,7 +26,7 @@ const Help = () => {
             <strong>Email me (Ryan) at ryanjyost@gmail.com</strong>
           </a>
           <p>
-            <i>I don't get many emails - I shall respond!</i>
+            <i>I WILL respond!</i>
           </p>
         </div>
       </Container>
