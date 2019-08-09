@@ -53,6 +53,9 @@ const createApi = () => {
       message
     });
 
+  const sendMovieWarning = movieId =>
+    api.post(`/admin/send_warning/${movieId}`);
+
   const getLogs = () => api.get("/admin/logs");
 
   return {
@@ -71,7 +74,8 @@ const createApi = () => {
     getAllFeedback,
     respondToFeedback,
     messageAll,
-    getLogs
+    getLogs,
+    sendMovieWarning
   };
 };
 

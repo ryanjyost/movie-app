@@ -21,6 +21,7 @@ import {
 
 import { defaultFilterMethod, generateReleaseText } from "../../util";
 import Loader from "../misc/Loader";
+import createApi from "../../services/MovieMediumApi";
 
 class Admin extends Component {
   constructor(props) {
@@ -103,6 +104,11 @@ class Admin extends Component {
     if (window.confirm("Confirm")) {
       this.props.messageAll(this.state.messageToAll);
     }
+  }
+
+  sendWarning(movie) {
+    const api = createApi();
+    api.sendMovieWarning(movie._id);
   }
 
   render() {
@@ -257,7 +263,7 @@ class Admin extends Component {
           Header: "Status",
           id: "status",
           accessor: row => row,
-          width: 70,
+          width: 90,
           Cell: row => {
             const movie = row.value;
             if (!movie.isClosed) {
@@ -391,6 +397,22 @@ class Admin extends Component {
                   Edit
                 </a>
               </div>
+            );
+          }
+        },
+        {
+          Header: "Warning",
+          accessor: "warning",
+          width: 100,
+          Cell: props => {
+            if (props.original.isClosed) return null;
+            return (
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={() => this.sendWarning(props.original)}
+              >
+                Send Warning
+              </a>
             );
           }
         }

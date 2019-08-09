@@ -63,8 +63,8 @@ const SideList = ({ toggleDrawer }) => {
       </div>
       <List>
         {[
-          { text: "Home", link: "/app" },
-          { text: "Create a group", link: "/create-group" }
+          { text: "Home", link: "/app" }
+          // { text: "Create a group", link: "/create-group" }
         ].map((item, index) => (
           <ListItem component={AdapterLink} button key={index} to={item.link}>
             <ListItemText primary={item.text} />

@@ -279,13 +279,15 @@ function Landing({ user, userId, userStatus }) {
           >
             Terms of Use
           </Link>
+          <br />
           <a
+            style={{ margin: 10, display: "block" }}
             className={classes.bottomLink}
             href={"mailto:ryanjyost@gmail.com?subject=Movie Medium"}
           >
             Contact/Support
           </a>
-          <Typography variant={"subtitle1"} color={"textSecondary"}>
+          <Typography variant={"caption"} color={"textSecondary"}>
             All Rights Reserved. 2019 Movie Medium . Property of Yost, LLC.
           </Typography>
         </div>
