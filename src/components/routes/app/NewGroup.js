@@ -32,7 +32,7 @@ const NewGroup = ({ group }) => {
               align={"center"}
               href={`https://slack.com/app_redirect?channel=${group.slackId}`}
             >
-              Click here to go to your new #moviemedium Slack channel
+              Click here to go to your new #movie_medium Slack channel
             </Link>
           ) : (
             <Typography align={"center"}>

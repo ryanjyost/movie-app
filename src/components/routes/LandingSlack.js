@@ -182,7 +182,7 @@ function Landing({ user, userId, userStatus }) {
           Install the Slack Bot
         </Typography>
         <Typography className={classes.sectionInfo}>
-          Your workspace will get a new #moviemedium channel, with a welcome
+          Your workspace will get a new #movie_medium channel, with a welcome
           message that's got tips and your first movies to predict.
         </Typography>
 
@@ -224,7 +224,7 @@ function Landing({ user, userId, userStatus }) {
           </Typography>
 
           <Typography className={classes.infoBold}>
-            Movie Medium will create a new channel called #moviemedium
+            Movie Medium will create a new channel called #movie_medium
           </Typography>
           <Typography className={classes.info}>
             This is where you'll invite coworkers and play the game.
@@ -244,11 +244,11 @@ function Landing({ user, userId, userStatus }) {
           <Typography className={classes.info}>
             1. Click "Make your prediction" buttons on messages from Movie
             Medium. <br />2. Use the <strong>/predict</strong> command in the
-            #moviemedium channel <br />3. Go to moviemedium.io
+            #movie_medium channel <br />3. Go to moviemedium.io
           </Typography>
 
           <Typography className={classes.infoBold}>
-            Movie Medium will post game-related messages to #moviemedium
+            Movie Medium will post game-related messages to #movie_medium
           </Typography>
           <Typography className={classes.info}>
             You and your coworkers will get messages about new movies, warnings

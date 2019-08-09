@@ -12,6 +12,7 @@ import Rules from "./Rules";
 import CreateGroup from "./CreateGroup";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Help from "./Help";
 
 // App
 import App from "./App";
@@ -79,6 +80,11 @@ const routes = [
     path: "/slack",
     exact: true,
     component: LandingSlack
+  },
+  {
+    path: "/help",
+    exact: true,
+    component: Help
   },
   {
     path: "/sign-in",
