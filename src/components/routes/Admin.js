@@ -111,7 +111,9 @@ class Admin extends Component {
 
   sendWarning(movie) {
     const api = createApi();
-    api.sendMovieWarning(movie._id);
+    if (window.confirm("Confirm")) {
+      api.sendMovieWarning(movie._id);
+    }
   }
 
   render() {
