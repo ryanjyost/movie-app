@@ -20,7 +20,7 @@ const Help = () => {
         >
           <h2>Question? Issue? Request?</h2>
           <a
-            style={{ fontSize: 20 }}
+            style={{ fontSize: 20, textAlign: "center", width: "100%" }}
             href={`mailto:ryanjyost@gmail.com?subject=Movie Medium`}
           >
             <strong>Email me (Ryan) at ryanjyost@gmail.com</strong>
