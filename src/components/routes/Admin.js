@@ -36,6 +36,7 @@ class Admin extends Component {
       rtScore: -1,
       releaseDate: moment.utc().startOf("day"),
       isClosed: 0,
+      poster: "",
 
       add_title: "",
       add_summary: "",
@@ -69,7 +70,8 @@ class Admin extends Component {
       rtScore: movie.rtScore,
       releaseDate: moment(movie.releaseDate * 1000).utc(),
       isClosed: "isClosed" in movie ? movie.isClosed : 0,
-      isEdit: true
+      isEdit: true,
+      poster: movie.poster
     });
   }
 
@@ -96,7 +98,8 @@ class Admin extends Component {
       rtLink: this.state.rtLink,
       releaseDate: this.state.releaseDate.unix(),
       isClosed: this.state.isClosed,
-      rtScore: Number(this.state.rtScore)
+      rtScore: Number(this.state.rtScore),
+      poster: this.state.poster
     });
   }
 
@@ -216,6 +219,7 @@ class Admin extends Component {
           {renderInput("trailer")}
           {renderInput("rtLink")}
           {renderInput("rtScore", !this.state.isClosed)}
+          {renderInput("poster")}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body1" gutterBottom>
               Is Closed?
