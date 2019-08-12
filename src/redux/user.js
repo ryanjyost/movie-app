@@ -38,6 +38,9 @@ const getUserOverall = createAction("GET_USER_OVERALL", {
   request: userId => ({ userId }),
   success: overall => ({ overall })
 });
+const logout = createAction("LOGOUT", {
+  request: () => ({})
+});
 
 const createSlackChannel = createAction("CREATE_SLACK_CHANNEL", {
   request: code => ({ code }),
@@ -53,7 +56,8 @@ export const actions = {
   switchGroup,
   getUser,
   getUserOverall,
-  createSlackChannel
+  createSlackChannel,
+  logout
 };
 
 // reducer with initial state
@@ -171,6 +175,13 @@ export function reducer(state = initialState, action) {
       } else {
         return state;
       }
+
+    case logout.types.request:
+      return update(state, {
+        user: { $set: null },
+        userId: { $set: null },
+        accessToken: { $set: null }
+      });
     case userLogin.types.failure:
       console.log("PAYLOAD", payload);
       return update(state, {
