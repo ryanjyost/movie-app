@@ -145,7 +145,7 @@ function Landing({ user, userId, userStatus }) {
           size={"large"}
           style={{ display: "flex", maxHeight: 44, paddingLeft: 10 }}
           // component={AdapterLink}
-          href={`https://slack.com/oauth/authorize?scope=channels:write,bot,channels:read,groups:read,chat:write:bot,commands,users:read&client_id=${
+          href={`https://slack.com/oauth/authorize?scope=bot,commands,chat:write:bot,channels:read,users:read,channels:write&client_id=${
             process.env.REACT_APP_SLACK_CLIENT_ID
           }&redirect_uri=${process.env.REACT_APP_CLIENT_URL}/auth-redirect`}
         >
