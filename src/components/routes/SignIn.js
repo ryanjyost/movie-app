@@ -19,7 +19,7 @@ const SignIn = () => {
         Sign In
       </Typography>
       <a
-        href={`https://slack.com/oauth/authorize?scope=identity.basic&client_id=${
+        href={`https://slack.com/oauth/authorize?scope=users:read&client_id=${
           process.env.REACT_APP_SLACK_CLIENT_ID
         }&redirect_uri=${process.env.REACT_APP_CLIENT_URL}/auth-redirect`}
       >
