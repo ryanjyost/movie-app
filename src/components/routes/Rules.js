@@ -60,8 +60,9 @@ const Rules = () => {
               <strong>
                 The players in your group with the best MM Metrics
               </strong>{" "}
-              for a movie get some points. 1st gets 30 points, 2nd gets 20
-              points, 3rd gets 10 points.
+              for a movie get some points. 1st gets 25 points, 2nd gets 18
+              points, 3rd gets 15 points...and on to 10th place. Same point
+              system as F1 racing, b/c why not?
             </p>
 
             <p style={textStyle}>
@@ -77,15 +78,13 @@ const Rules = () => {
             <div style={textStyle}>
               <strong>
                 {" "}
-                All Movie Medium groups are linked to a GroupMe chat
+                All Movie Medium groups are linked to a GroupMe chat or Slack
+                channel
               </strong>, where you...
               <div style={{ padding: "5px 5px 5px" }}>
                 <span>...get movie and game-related updates</span>
                 <br />
-                <span>
-                  ...predict RT Scores by sending a message like “Matrix 4 =
-                  12%”
-                </span>
+                <span>...predict RT Scores, view rankings, etc.</span>
                 <br />
                 <span>...stay in touch with the players in your group</span>
               </div>
@@ -96,17 +95,18 @@ const Rules = () => {
                 Use the app at{" "}
                 <a href="https://moviemedium.io">moviemedium.io</a>{" "}
               </strong>to manage predictions and see more detailed game info
-              like past movie results and group rankings.
+              like past movie results and your rankings.
             </p>
 
             <p style={textStyle}>
               <strong>
-                Invite more friends to play via your GroupMe chat at any time.
+                Invite more friends to play via your GroupMe chat or Slack
+                channel at any time.
               </strong>
             </p>
             <p style={textStyle}>
-              <strong>Mention Movie Medium (@Movie Medium) in GroupMe</strong>{" "}
-              with any questions, ideas, bugs, stock recommendations, etc.
+              <strong>Email ryanjyost@gmail.com </strong> with any questions,
+              ideas, bugs, stock recommendations, etc.
             </p>
           </div>
         </div>

@@ -2,25 +2,19 @@ import { call, put } from "redux-saga/effects";
 import { actions as Actions } from "../redux/user";
 
 function* userLogin({ api, action }, { payload }) {
-  const { accessToken, createGroup } = payload;
+  const { accessToken, platform } = payload;
 
   try {
-    const response = yield call(api.loginUser, accessToken);
-    yield put(action.success(response.data.user));
-
-    // if this user login was triggered when creating a group, create the group
-    if (createGroup) {
-      const groupResponse = yield call(
-        api.createGroup,
-        accessToken,
-        response.data.user
-      );
-      yield put(
-        Actions.createGroup.success(
-          groupResponse.data.group,
-          groupResponse.data.user
-        )
-      );
+    const response = yield call(api.loginUser, accessToken, platform);
+    console.log("RESPONSE!", response);
+    if (
+      response.data.user &&
+      response.data.user.groups &&
+      response.data.user.groups.length
+    ) {
+      yield put(action.success(response.data.user));
+    } else {
+      yield put(action.failure(response.data));
     }
   } catch (error) {
     yield put(action.failure(error));
@@ -61,7 +55,12 @@ function* getUser({ api, action }, { payload }) {
   const { userId } = payload;
   try {
     const response = yield call(api.getUser, userId);
-    yield put(action.success(response.data.user));
+    console.log("RESPONSE", response);
+    if (response.data.user) {
+      yield put(action.success(response.data.user));
+    } else {
+      yield put(action.failure(response.data));
+    }
   } catch (error) {
     yield put(action.failure(error));
   }
@@ -77,11 +76,22 @@ function* getUserOverall({ api, action }, { payload }) {
   }
 }
 
+function* createSlackChannel({ api, action }, { payload }) {
+  const { code } = payload;
+  try {
+    const response = yield call(api.createSlackChannel, code);
+    yield put(action.success(response.data.user, response.data.group));
+  } catch (error) {
+    yield put(action.failure(error));
+  }
+}
+
 export default {
   userLogin,
   predictMovie,
   getSeasonRankings,
   getOverallRankings,
   getUser,
-  getUserOverall
+  getUserOverall,
+  createSlackChannel
 };

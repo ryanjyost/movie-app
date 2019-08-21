@@ -111,6 +111,7 @@ const App = ({
       <BottomNavigation
         className={classes.bottomNav}
         value={location.pathname.split("/")[2] || "home"}
+        style={{ height: 40, borderTop: "1px solid rgba(0,0,0,0.1)" }}
         showLabels
       >
         {group ? (
@@ -118,14 +119,14 @@ const App = ({
             label="Leaderboard"
             component={AdapterLink}
             to={"/app/leaderboard/seasons"}
-            icon={<PeopleIcon />}
+            // icon={<PeopleIcon />}
             value={"leaderboard"}
           />
         ) : null}
         <BottomNavigationAction
           component={AdapterLink}
           label="Home"
-          icon={<HomeIcon />}
+          // icon={<HomeIcon />}
           to={"/app"}
           value={"home"}
         />
@@ -134,7 +135,7 @@ const App = ({
           to={"/app/predictions/upcoming"}
           value={"predictions"}
           label="Predictions"
-          icon={<MovieIcon />}
+          // icon={<MovieIcon />}
         />
       </BottomNavigation>
     </div>

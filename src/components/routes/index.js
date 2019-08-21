@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 // Top level routes
 import Landing from "./Landing";
+import LandingSlack from "./LandingSlack";
 import AuthRedirect from "./AuthRedirect";
 import Admin from "./Admin";
 import TermsOfService from "./TermsOfService";
@@ -11,6 +12,7 @@ import Rules from "./Rules";
 import CreateGroup from "./CreateGroup";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Help from "./Help";
 
 // App
 import App from "./App";
@@ -73,6 +75,16 @@ const routes = [
     path: "/",
     exact: true,
     component: Landing
+  },
+  {
+    path: "/slack",
+    exact: true,
+    component: LandingSlack
+  },
+  {
+    path: "/help",
+    exact: true,
+    component: Help
   },
   {
     path: "/sign-in",

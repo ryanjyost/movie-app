@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import Storage from "store";
 import MenuIcon from "@material-ui/icons/MoreVert";
 import {
   AppBar,
@@ -16,6 +18,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HideOnScroll from "../hoc/HideOnScroll";
 import { makeStyles } from "@material-ui/styles";
 import { allRoutes } from "../routes";
+import { Actions } from "../../redux";
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -46,7 +49,7 @@ const AdapterLink = React.forwardRef((props, ref) => (
   <NavLink innerRef={ref} {...props} />
 ));
 
-const SideList = ({ toggleDrawer }) => {
+const SideList = ({ toggleDrawer, logout }) => {
   const classes = useStyles();
 
   return (
@@ -63,8 +66,8 @@ const SideList = ({ toggleDrawer }) => {
       </div>
       <List>
         {[
-          { text: "Home", link: "/app" },
-          { text: "Create a group", link: "/create-group" }
+          { text: "Home", link: "/app" }
+          // { text: "Create a group", link: "/create-group" }
         ].map((item, index) => (
           <ListItem component={AdapterLink} button key={index} to={item.link}>
             <ListItemText primary={item.text} />
@@ -90,19 +93,34 @@ const SideList = ({ toggleDrawer }) => {
           <ListItemText primary={"Contact"} />
         </ListItem>
       </List>
+      <Divider />
+      <List>
+        <ListItem
+          component={AdapterLink}
+          to={"/"}
+          button
+          key={"logout"}
+          onClick={() => {
+            // Storage.clearAll();
+            logout();
+          }}
+        >
+          <ListItemText primary={"Log out"} />
+        </ListItem>
+      </List>
     </div>
   );
 };
 
-const SideMenu = ({ isOpen, toggleDrawer }) => {
+const SideMenu = ({ isOpen, toggleDrawer, logout }) => {
   return (
     <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
-      <SideList toggleDrawer={toggleDrawer} />
+      <SideList toggleDrawer={toggleDrawer} logout={logout} />
     </Drawer>
   );
 };
 
-const AppHeader = ({ children, disableHideOnScroll, location }) => {
+const AppHeader = ({ children, disableHideOnScroll, location, logout }) => {
   const routeInfo = allRoutes.find(route => route.path === location.pathname);
 
   let title = "Movie Medium";
@@ -129,7 +147,7 @@ const AppHeader = ({ children, disableHideOnScroll, location }) => {
   return (
     <HideOnScroll disable={disableHideOnScroll}>
       <AppBar>
-        <SideMenu isOpen={isOpen} toggleDrawer={toggleDrawer} />
+        <SideMenu isOpen={isOpen} toggleDrawer={toggleDrawer} logout={logout} />
         <Toolbar className={classes.toolbar}>
           <Typography
             variant="body1"
@@ -167,4 +185,26 @@ const AppHeader = ({ children, disableHideOnScroll, location }) => {
   );
 };
 
-export default withRouter(AppHeader);
+const mapStateToProps = state => {
+  return {
+    styles: state.styles,
+    user: state.user.user,
+    userId: state.user.userId,
+    userStatus: state.user.status
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateDimensions: width => dispatch(Actions.styles.updateDimensions(width)),
+    getUser: userId => dispatch(Actions.user.getUser.request(userId)),
+    logout: () => dispatch(Actions.user.logout.request())
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AppHeader)
+);

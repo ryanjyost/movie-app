@@ -16,7 +16,8 @@ const {
   getSeasonRankings,
   getOverallRankings,
   getUser,
-  getUserOverall
+  getUserOverall,
+  createSlackChannel
 } = Actions.user;
 const {
   getAllFeedback,
@@ -48,6 +49,7 @@ export default function*() {
     generateWatcher(predictMovie, UserSagas),
     generateWatcher(getSeasonRankings, UserSagas),
     generateWatcher(getOverallRankings, UserSagas),
+    generateWatcher(createSlackChannel, UserSagas),
     //admin
     generateWatcher(getAllFeedback, AdminSagas),
     generateWatcher(respondToFeedback, AdminSagas),

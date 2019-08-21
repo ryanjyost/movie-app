@@ -89,21 +89,21 @@ const Home = ({ currentUserOverall, getUserOverall, user }) => {
         </CardContent>
       </Card>
 
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          <Typography style={{ marginBottom: 20 }}>
-            Have friends who'd want to play?
-          </Typography>
-          <Button
-            component={AdapterLink}
-            to={"/create-group"}
-            variant={"outlined"}
-            color={"secondary"}
-          >
-            Create a group
-          </Button>
-        </CardContent>
-      </Card>
+      {/*<Card className={classes.card}>*/}
+      {/*<CardContent className={classes.cardContent}>*/}
+      {/*<Typography style={{ marginBottom: 20 }}>*/}
+      {/*Have friends who'd want to play?*/}
+      {/*</Typography>*/}
+      {/*<Button*/}
+      {/*component={AdapterLink}*/}
+      {/*to={"/create-group"}*/}
+      {/*variant={"outlined"}*/}
+      {/*color={"secondary"}*/}
+      {/*>*/}
+      {/*Create a group*/}
+      {/*</Button>*/}
+      {/*</CardContent>*/}
+      {/*</Card>*/}
     </div>
   );
 };

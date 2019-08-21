@@ -21,6 +21,7 @@ import {
 
 import { defaultFilterMethod, generateReleaseText } from "../../util";
 import Loader from "../misc/Loader";
+import createApi from "../../services/MovieMediumApi";
 
 class Admin extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Admin extends Component {
       rtScore: -1,
       releaseDate: moment.utc().startOf("day"),
       isClosed: 0,
+      poster: "",
 
       add_title: "",
       add_summary: "",
@@ -68,7 +70,8 @@ class Admin extends Component {
       rtScore: movie.rtScore,
       releaseDate: moment(movie.releaseDate * 1000).utc(),
       isClosed: "isClosed" in movie ? movie.isClosed : 0,
-      isEdit: true
+      isEdit: true,
+      poster: movie.poster
     });
   }
 
@@ -95,13 +98,21 @@ class Admin extends Component {
       rtLink: this.state.rtLink,
       releaseDate: this.state.releaseDate.unix(),
       isClosed: this.state.isClosed,
-      rtScore: Number(this.state.rtScore)
+      rtScore: Number(this.state.rtScore),
+      poster: this.state.poster
     });
   }
 
   sendMessageToAll() {
     if (window.confirm("Confirm")) {
       this.props.messageAll(this.state.messageToAll);
+    }
+  }
+
+  sendWarning(movie) {
+    const api = createApi();
+    if (window.confirm("Confirm")) {
+      api.sendMovieWarning(movie._id);
     }
   }
 
@@ -210,6 +221,7 @@ class Admin extends Component {
           {renderInput("trailer")}
           {renderInput("rtLink")}
           {renderInput("rtScore", !this.state.isClosed)}
+          {renderInput("poster")}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Typography variant="body1" gutterBottom>
               Is Closed?
@@ -257,7 +269,7 @@ class Admin extends Component {
           Header: "Status",
           id: "status",
           accessor: row => row,
-          width: 70,
+          width: 90,
           Cell: row => {
             const movie = row.value;
             if (!movie.isClosed) {
@@ -391,6 +403,22 @@ class Admin extends Component {
                   Edit
                 </a>
               </div>
+            );
+          }
+        },
+        {
+          Header: "Warning",
+          accessor: "warning",
+          width: 100,
+          Cell: props => {
+            if (props.original.isClosed) return null;
+            return (
+              <a
+                style={{ cursor: "pointer" }}
+                onClick={() => this.sendWarning(props.original)}
+              >
+                Send Warning
+              </a>
             );
           }
         }

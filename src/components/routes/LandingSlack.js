@@ -51,6 +51,15 @@ const useStyles = makeStyles(theme => {
       color: "rgba(0,0,0,0.5)",
       marginBottom: 40
     },
+    info: {
+      color: "rgba(0,0,0,0.5)",
+      marginBottom: 40
+    },
+    infoBold: {
+      color: "rgba(0,0,0,0.8)",
+      fontWeight: "bold",
+      marginBottom: 0
+    },
     bottomLink: {
       margin: "0px 10px"
     }
@@ -126,16 +135,27 @@ function Landing({ user, userId, userStatus }) {
           color={"primary"}
           variant={"h5"}
         >
-          <strong>Predict Rotten Tomatoes Scores with friends</strong>
+          <strong>
+            Predict Rotten Tomatoes Scores against your coworkers in Slack
+          </strong>
         </Typography>
         <Button
           variant="contained"
           color="secondary"
           size={"large"}
-          component={AdapterLink}
-          to={"/sign-up"}
+          style={{ display: "flex", maxHeight: 44, paddingLeft: 10 }}
+          // component={AdapterLink}
+          href={`https://slack.com/oauth/authorize?scope=bot,commands,chat:write:bot,channels:read,users:read,channels:write&client_id=${
+            process.env.REACT_APP_SLACK_CLIENT_ID
+          }&redirect_uri=${process.env.REACT_APP_CLIENT_URL}/auth-redirect`}
         >
-          <strong>Start Playing</strong>
+          <img
+            src={"slack_logo.svg"}
+            height={50}
+            width={50}
+            style={{ marginRight: 0 }}
+          />{" "}
+          <strong> Add to Slack</strong>
         </Button>
         <Typography
           variant={"caption"}
@@ -155,24 +175,29 @@ function Landing({ user, userId, userStatus }) {
         </Typography>
 
         <Typography style={{ marginTop: 100, marginBottom: 30 }} variant={"h5"}>
-          <strong>How it works</strong>
+          <strong>TLDR</strong>
         </Typography>
         <PeopleIcon className={classes.icon} />
         <Typography variant={"h6"} className={classes.sectionTitle}>
-          Sign Up
+          Install the Slack Bot
         </Typography>
         <Typography className={classes.sectionInfo}>
-          Create a group and play with friends. Each group is linked to a Slack
-          channel or GroupMe chat. Dealer's choice.
+          Your workspace will get a new #movie_medium channel, with a welcome
+          message that's got tips and your first movies to predict.
         </Typography>
 
         <MovieIcon className={classes.icon} />
         <Typography variant={"h6"} className={classes.sectionTitle}>
-          Make Predictions
+          Play the game
         </Typography>
         <Typography className={classes.sectionInfo}>
-          Watch trailers of upcoming movies and make your best guess for what
-          the Rotten Tomatoes score will be.
+          Watch trailers of upcoming movies and make your predictions for what
+          the Rotten Tomatoes scores will be - without ever leaving Slack{" "}
+          <i style={{ color: "rgba(0,0,0,0.5)" }}>
+            (though we've got a{" "}
+            <a href={process.env.REACT_APP_CLIENT_URL}>web app</a> if that's
+            more your style)
+          </i>
         </Typography>
 
         <FunIcon className={classes.icon} />
@@ -180,9 +205,64 @@ function Landing({ user, userId, userStatus }) {
           Have fun
         </Typography>
         <Typography className={classes.sectionInfo}>
-          See the latest trailers, debate RT scores, and taste sweet victory
-          when you make an exact prediction.
+          Debate RT scores, see how close everyone's predictions were and taste
+          sweet victory when you're the winner of a 5 movie season.
         </Typography>
+
+        <div style={{ width: "100%" }}>
+          <Typography
+            style={{ marginTop: 60, marginBottom: 30, textAlign: "center" }}
+            variant={"h5"}
+          >
+            <strong>How it works with Slack</strong>
+          </Typography>
+          <Typography className={classes.infoBold}>
+            First, install the Slack app
+          </Typography>
+          <Typography className={classes.info}>
+            You can do that with the big button at the top of this page.
+          </Typography>
+
+          <Typography className={classes.infoBold}>
+            Movie Medium will create a new channel called #movie_medium
+          </Typography>
+          <Typography className={classes.info}>
+            This is where you'll invite coworkers and play the game.
+          </Typography>
+
+          <Typography className={classes.infoBold}>
+            Movie Medium will share a movie when it's open to predictions
+          </Typography>
+          <Typography className={classes.info}>
+            You can watch the trailer, visit the Rotten Tomatoes page and make
+            your prediction.
+          </Typography>
+
+          <Typography className={classes.infoBold}>
+            There are several ways you can predict RT scores of movies
+          </Typography>
+          <Typography className={classes.info}>
+            1. Click "Make your prediction" buttons on messages from Movie
+            Medium. <br />2. Use the <strong>/predict</strong> command in the
+            #movie_medium channel <br />3. Go to moviemedium.io
+          </Typography>
+
+          <Typography className={classes.infoBold}>
+            Movie Medium will post game-related messages to #movie_medium
+          </Typography>
+          <Typography className={classes.info}>
+            You and your coworkers will get messages about new movies, warnings
+            when movies are close to being locked-in, the locked-in predictions
+            of all players, results of movies that finally have an RT score and
+            the winners of single movies and seasons.
+          </Typography>
+
+          <Typography className={classes.infoBold}>
+            <Link component={AdapterLink} to={"/rules"}>
+              Here are the rules of the game
+            </Link>
+          </Typography>
+        </div>
 
         <div style={{ marginTop: 50 }}>
           <Link

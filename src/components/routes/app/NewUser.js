@@ -15,9 +15,7 @@ const NewUser = () => {
       >
         <img
           style={{ borderRadius: 5 }}
-          src={
-            "https://s3.amazonaws.com/moviemedium.io/images/memes/hello-clarice.jpg"
-          }
+          src={"https://moviemedium-assets.s3.amazonaws.com/helloclarice.jpeg"}
           width={300}
         />
 
@@ -25,8 +23,7 @@ const NewUser = () => {
           <strong>Welcome to Movie Medium!</strong>
         </Typography>
         <Typography align={"center"}>
-          You're ready to start predicting movies and show off your film critic
-          prowess. Get started here or in GroupMe.
+          You're ready to start predicting movies.
         </Typography>
       </Container>
     </div>

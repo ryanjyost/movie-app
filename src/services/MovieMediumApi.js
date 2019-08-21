@@ -18,7 +18,8 @@ const createApi = () => {
 
   //============
   // users
-  const loginUser = access_token => api.post("/users/login", { access_token });
+  const loginUser = (access_token, platform) =>
+    api.post(`/users/login/${platform}`, { access_token });
 
   const getUser = userId => api.get(`/users/${userId}`);
 
@@ -35,6 +36,9 @@ const createApi = () => {
   const createGroup = (accessToken, user) =>
     api.post("/groups/create", { accessToken, user });
 
+  const createSlackChannel = code =>
+    api.post("/slack/create_channel", { code });
+
   //============
   // admin
   const getAllFeedback = () => api.get("/admin/feedback");
@@ -49,6 +53,9 @@ const createApi = () => {
       message
     });
 
+  const sendMovieWarning = movieId =>
+    api.post(`/admin/send_warning/${movieId}`);
+
   const getLogs = () => api.get("/admin/logs");
 
   return {
@@ -58,6 +65,7 @@ const createApi = () => {
     editMovie,
     loginUser,
     getUser,
+    createSlackChannel,
     getUserOverall,
     createGroup,
     predictMovie,
@@ -66,7 +74,8 @@ const createApi = () => {
     getAllFeedback,
     respondToFeedback,
     messageAll,
-    getLogs
+    getLogs,
+    sendMovieWarning
   };
 };
 
