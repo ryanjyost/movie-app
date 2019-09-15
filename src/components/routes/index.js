@@ -8,6 +8,7 @@ import AuthRedirect from "./AuthRedirect";
 import Admin from "./Admin";
 import TermsOfService from "./TermsOfService";
 import PrivacyPolicy from "./PrivacyPolicy";
+import MyAccount from "./app/MyAccount";
 import Rules from "./Rules";
 import CreateGroup from "./CreateGroup";
 import SignIn from "./SignIn";
@@ -67,6 +68,10 @@ const appRoutes = [
     path: "/app/leaderboard/overall",
     component: Overall,
     title: "Leaderboard"
+  },
+  {
+    path: "/app/account",
+    component: MyAccount
   }
 ];
 
@@ -120,6 +125,7 @@ const routes = [
     path: "/admin",
     component: Admin
   },
+
   {
     path: "/auth-redirect",
     component: AuthRedirect

@@ -97,6 +97,14 @@ const SideList = ({ toggleDrawer, logout }) => {
       <List>
         <ListItem
           component={AdapterLink}
+          to={"/app/account"}
+          button
+          key={"myAccount"}
+        >
+          <ListItemText primary={"My Account"} />
+        </ListItem>
+        <ListItem
+          component={AdapterLink}
           to={"/"}
           button
           key={"logout"}
