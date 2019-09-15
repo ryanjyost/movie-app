@@ -33,7 +33,7 @@ export const generateReleaseText = (
   const cutoffDate = moment.unix(moviePredictionCutoffDate).utc();
 
   const timeUnitsUntilCutoff = unit => {
-    return cutoffDate.diff(moment.utc().add(14, "days"), unit);
+    return cutoffDate.diff(moment.utc().add(7, "days"), unit);
   };
 
   const daysUntilCutoff = releaseDate.diff(cutoffDate, "days");

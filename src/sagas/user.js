@@ -86,12 +86,23 @@ function* createSlackChannel({ api, action }, { payload }) {
   }
 }
 
+function* deleteUser({ api, action }, { payload }) {
+  const { userId } = payload;
+  try {
+    const response = yield call(api.deleteUser, userId);
+    yield put(action.success());
+  } catch (error) {
+    yield put(action.failure(error));
+  }
+}
+
 export default {
   userLogin,
   predictMovie,
   getSeasonRankings,
   getOverallRankings,
   getUser,
+  deleteUser,
   getUserOverall,
   createSlackChannel
 };

@@ -34,6 +34,10 @@ const getUser = createAction("GET_USER", {
   request: userId => ({ userId }),
   success: user => ({ user })
 });
+const deleteUser = createAction("DELETE_USER", {
+  request: userId => ({ userId }),
+  success: () => ({})
+});
 const getUserOverall = createAction("GET_USER_OVERALL", {
   request: userId => ({ userId }),
   success: overall => ({ overall })
@@ -55,6 +59,7 @@ export const actions = {
   createGroup,
   switchGroup,
   getUser,
+  deleteUser,
   getUserOverall,
   createSlackChannel,
   logout
@@ -158,6 +163,11 @@ export function reducer(state = initialState, action) {
     case getSeasonRankings.types.success:
       return update(state, {
         currentSeasonRankings: { $set: payload.rankings }
+      });
+
+    case deleteUser.types.success:
+      return update(state, {
+        user: { $set: null }
       });
     case getOverallRankings.types.success:
       return update(state, {

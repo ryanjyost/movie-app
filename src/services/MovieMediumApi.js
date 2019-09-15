@@ -23,6 +23,8 @@ const createApi = () => {
 
   const getUser = userId => api.get(`/users/${userId}`);
 
+  const deleteUser = userId => api.delete(`/users/${userId}`);
+
   const getUserOverall = userId => api.get(`/users/${userId}/overall`);
 
   const predictMovie = (movieId, userId, prediction) =>
@@ -65,6 +67,7 @@ const createApi = () => {
     editMovie,
     loginUser,
     getUser,
+    deleteUser,
     createSlackChannel,
     getUserOverall,
     createGroup,
